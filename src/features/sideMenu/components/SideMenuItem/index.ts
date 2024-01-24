@@ -1,1 +1,0 @@
-export { SideMenuItem } from './SideMenuItem';

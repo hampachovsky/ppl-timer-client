@@ -1,1 +1,0 @@
-export { ThemeRegistry } from './ThemeRegistry';

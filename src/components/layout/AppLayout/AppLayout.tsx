@@ -1,15 +1,14 @@
 import { Header } from '@/components/ui';
-import { SideMenu } from '@/features';
-import { Box, Container, Toolbar } from '@mui/material';
+import { SideMenu } from '@/features/sideMenu';
+import { Box, Container } from '@mui/material';
 
 export const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <Box>
       <Header />
-      <Toolbar id='back-to-top-anchor' />
       <Box display='flex'>
         <SideMenu />
-        <Container>{children}</Container>
+        <Container sx={{ my: 10 }}>{children}</Container>
       </Box>
     </Box>
   );
