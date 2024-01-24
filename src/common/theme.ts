@@ -22,6 +22,8 @@ export const roboto = Roboto({
   subsets: ['latin', 'cyrillic'],
 });
 
+// TODO: CHANGE COLOR SCHEME
+
 const colors = {
   grey: '#1A202C',
   black: '#000000',

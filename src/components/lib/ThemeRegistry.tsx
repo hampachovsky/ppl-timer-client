@@ -10,7 +10,7 @@ import React from 'react';
 
 // This implementation is from emotion-js
 // https://github.com/emotion-js/emotion/issues/2928#issuecomment-1319747902
-export default function ThemeRegistry({ children }: { children: React.ReactNode }) {
+export const ThemeRegistry = ({ children }: { children: React.ReactNode }) => {
   const options = { key: 'mui' };
 
   const [{ cache, flush }] = React.useState(() => {
@@ -61,4 +61,4 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
       </ThemeProvider>
     </CacheProvider>
   );
-}
+};

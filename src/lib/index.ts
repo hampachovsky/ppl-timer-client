@@ -1,2 +1,0 @@
-/* export { createEmotionCache } from './createEmotionCache';
- */
