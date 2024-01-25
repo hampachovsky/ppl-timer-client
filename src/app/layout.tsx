@@ -7,6 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 export const metadata = {
   title: 'PPL-timer',
   description: 'Сервіс для обліку та відстеженню робочого часу',
+  authors: 'Novak Oleksander',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

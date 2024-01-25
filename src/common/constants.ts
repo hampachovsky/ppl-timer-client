@@ -7,5 +7,10 @@ export const constants = {
       text: 'Time Tracker',
       route: '/time-tracker',
     },
+    {
+      icon: AccessTimeIcon,
+      text: 'test',
+      route: '/test',
+    },
   ],
 };
