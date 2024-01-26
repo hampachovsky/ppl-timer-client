@@ -1,5 +1,4 @@
 import { darkTheme } from '@/common';
-import { AppLayout } from '@/components';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
@@ -17,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={darkTheme}>
             <CssBaseline />
-            <AppLayout>{children}</AppLayout>
+            {children}
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
