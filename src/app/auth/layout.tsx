@@ -1,11 +1,11 @@
-import { MyAuthLayout } from '@/components/layout/MyAuthLayout';
+import { AuthorizationLayout } from '@/components/layout';
 
 export const metadata = {
-  title: 'PPL-timer',
+  title: 'Авторизація',
   description: 'Сервіс для обліку та відстеженню робочого часу',
   authors: 'Novak Oleksander',
 };
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
-  return <MyAuthLayout>{children}</MyAuthLayout>;
+  return <AuthorizationLayout>{children}</AuthorizationLayout>;
 }
