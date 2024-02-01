@@ -1,9 +1,11 @@
 'use client';
 import { routesPath } from '@/common';
 import { FormField, LoginDto, loginSchema } from '@/features/auth';
+import { authAPI } from '@/services';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Box, Grid, Typography } from '@mui/material';
+import { setCookie } from 'cookies-next';
 import Link from 'next/link';
 import React from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -11,7 +13,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 export const LoginForm: React.FC = () => {
   const methods = useForm<LoginDto>({
     defaultValues: {
-      username: '',
+      email: '',
       password: '',
     },
     mode: 'onSubmit',
@@ -22,19 +24,29 @@ export const LoginForm: React.FC = () => {
     handleSubmit,
     control,
     formState: { errors, isDirty, isValid, isSubmitting },
+    reset,
   } = methods;
 
   const onSubmit: SubmitHandler<LoginDto> = async (data) => {
-    console.log(data);
+    // TODO: add error handling, add zustand for state managment
+    try {
+      const res = await authAPI.login(data);
+      setCookie('pplTimerToken', res.token);
+      console.log(res);
+      reset();
+    } catch (err) {
+      console.log(err);
+      throw new Error(err);
+    }
   };
   return (
     <Box maxWidth='sm'>
       <FormProvider {...methods}>
         <form action='submit' onSubmit={handleSubmit(onSubmit)}>
           <FormField
-            error={errors.username?.message}
-            fieldKey='username'
-            label="Ім'я користувача"
+            error={errors.email?.message}
+            fieldKey='email'
+            label='Пошта'
             autoFocus={true}
           />
           <FormField

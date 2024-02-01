@@ -1,9 +1,11 @@
 'use client';
 import { routesPath } from '@/common';
 import { FormField, RegisterDto, registerSchema } from '@/features/auth';
+import { authAPI } from '@/services';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Box, Grid, Typography } from '@mui/material';
+import { setCookie } from 'cookies-next';
 import Link from 'next/link';
 import React from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -23,10 +25,14 @@ export const RegisterForm: React.FC = () => {
   const {
     handleSubmit,
     formState: { errors, isDirty, isValid, isSubmitting },
+    reset,
   } = methods;
 
   const onSubmit: SubmitHandler<RegisterDto> = async (data) => {
-    console.log(data);
+    const res = await authAPI.register(data);
+    setCookie('pplTimerToken', res.token);
+    console.log(res);
+    reset();
   };
   return (
     <Box maxWidth='sm'>

@@ -1,6 +1,10 @@
-import { SvgIconTypeMap } from '@mui/material';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
+export type UserResponse = {
+  user: UserData;
+  token: string;
+};
 
-export type muiIconType = OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
-  muiName: string;
+export type UserData = {
+  id: string;
+  email: string;
+  username: string;
 };
