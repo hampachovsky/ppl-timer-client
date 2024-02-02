@@ -1,0 +1,1 @@
+export { registerActionSchema } from './registerActionSchema';

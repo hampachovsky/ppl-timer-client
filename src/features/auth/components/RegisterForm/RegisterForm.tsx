@@ -1,16 +1,18 @@
 'use client';
 import { routesPath } from '@/common';
 import { FormField, RegisterDto, registerSchema } from '@/features/auth';
-import { authAPI } from '@/services';
+import { registerAction } from '@/services';
+import { userStore } from '@/store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Box, Grid, Typography } from '@mui/material';
-import { setCookie } from 'cookies-next';
+import { useAction } from 'next-safe-action/hooks';
 import Link from 'next/link';
 import React from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 export const RegisterForm: React.FC = () => {
+  const { setUser } = userStore();
   const methods = useForm({
     defaultValues: {
       username: '',
@@ -28,10 +30,18 @@ export const RegisterForm: React.FC = () => {
     reset,
   } = methods;
 
+  // TODO: ADD error handler
+  const { execute, status } = useAction(registerAction, {
+    onSuccess(data) {
+      if (data?.error) throw new Error(data.error);
+      if (data?.success) setUser(data?.success);
+    },
+    onExecute(data) {
+      console.log('start...');
+    },
+  });
   const onSubmit: SubmitHandler<RegisterDto> = async (data) => {
-    const res = await authAPI.register(data);
-    setCookie('pplTimerToken', res.token);
-    console.log(res);
+    execute(data);
     reset();
   };
   return (

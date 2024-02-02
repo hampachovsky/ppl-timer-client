@@ -4,13 +4,9 @@ import { UserData, UserResponse } from '@/types';
 
 export const authAPI = {
   async login(dto: LoginDto): Promise<UserResponse> {
-    try {
-      const response = await instance.post('/auth/login', dto);
+    const response = await instance.post('/auth/login', dto);
 
-      return response.data;
-    } catch (err) {
-      throw new Error(err);
-    }
+    return response.data;
   },
   async register(dto: RegisterDto): Promise<UserResponse> {
     const response = await instance.post('/auth/register', dto);
