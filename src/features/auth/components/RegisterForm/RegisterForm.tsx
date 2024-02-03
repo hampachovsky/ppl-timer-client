@@ -1,13 +1,11 @@
 'use client';
-import { routesPath } from '@/common';
 import { FormField, RegisterDto, registerSchema } from '@/features/auth';
 import { registerAction } from '@/services';
 import { userStore } from '@/store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useAction } from 'next-safe-action/hooks';
-import Link from 'next/link';
 import React from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
@@ -85,13 +83,6 @@ export const RegisterForm: React.FC = () => {
           </LoadingButton>
         </form>
       </FormProvider>
-      <Grid container justifyContent='center'>
-        <Grid item>
-          <Typography>
-            Уже є аккаунт? <Link href={routesPath.LOGIN}>Увійдіть</Link>
-          </Typography>
-        </Grid>
-      </Grid>
     </Box>
   );
 };

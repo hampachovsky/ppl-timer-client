@@ -1,13 +1,11 @@
 'use client';
-import { routesPath } from '@/common';
 import { FormField, LoginDto, loginSchema } from '@/features/auth';
 import { loginAction } from '@/services';
 import { userStore } from '@/store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useAction } from 'next-safe-action/hooks';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -67,11 +65,6 @@ export const LoginForm: React.FC = () => {
           </LoadingButton>
         </form>
       </FormProvider>
-      <Grid container sx={{ justifyContent: 'center' }}>
-        <Typography variant='body1'>
-          Немає аккаунту? <Link href={routesPath.REGISTER}>Створіть</Link>
-        </Typography>
-      </Grid>
     </Box>
   );
 };
