@@ -27,7 +27,6 @@ export const roboto = Roboto({
 
 const colors = {
   grey: '#1A202C',
-  black: '#000000',
   lightGrey: '#2c313d',
   lightGreen: '#81E6D9',
   darkGreen: '#319795',
@@ -78,7 +77,7 @@ export const darkTheme = createTheme({
       paper: colors.grey,
     },
     primary: {
-      main: colors.lightGreen,
+      main: colors.darkGreen,
     },
     error: {
       main: colors.red,
