@@ -1,4 +1,3 @@
-'use client';
 import { routesPath } from '@/common';
 import { LoginForm } from '@/features/auth';
 import LockIcon from '@mui/icons-material/Lock';

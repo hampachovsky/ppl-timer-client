@@ -1,1 +1,1 @@
-export { action } from './safe-action';
+export { action } from './safeAction';

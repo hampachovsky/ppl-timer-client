@@ -8,3 +8,8 @@ export type UserData = {
   email: string;
   username: string;
 };
+
+export type RequestError = {
+  status: number | string;
+  statusText: string;
+};

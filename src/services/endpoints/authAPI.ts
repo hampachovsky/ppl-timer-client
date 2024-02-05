@@ -1,19 +1,27 @@
 import { LoginDto, RegisterDto } from '@/features/auth';
-import { instance } from '@/services';
+import { fetchClient } from '@/services';
 import { UserData, UserResponse } from '@/types';
 
 export const authAPI = {
   async login(dto: LoginDto): Promise<UserResponse> {
-    const response = await instance.post('/auth/login', dto);
+    //const response = await instance.post('/auth/login', dto);
+    const response = await fetchClient.request('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
 
-    return response.data;
+    return response;
   },
   async register(dto: RegisterDto): Promise<UserResponse> {
-    const response = await instance.post('/auth/register', dto);
-    return response.data;
+    const response = await fetchClient.request('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+    // const response = await instance.post('/auth/register', dto);
+    return response;
   },
-  async authMe(): Promise<UserData> {
-    const response = await instance.get('/users/me');
-    return response.data;
+  async authMe(token: string): Promise<UserData> {
+    const response = await fetchClient.request('/users/me', {}, token);
+    return response;
   },
 };

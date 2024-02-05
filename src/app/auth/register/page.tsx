@@ -4,7 +4,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { Avatar, Grid, Typography } from '@mui/material';
 import Link from 'next/link';
 
-const LoginPage = () => {
+const RegisterPage = async () => {
   return (
     <>
       <Typography component='h1' variant='h5'>
@@ -26,4 +26,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

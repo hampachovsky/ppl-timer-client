@@ -4,12 +4,12 @@
 
 import { UserData } from '@/types';
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 
 type State = {
   data: UserData | null;
-  isAuth: boolean;
   loading: boolean;
+  isAuth: boolean;
 };
 
 type Actions = {
@@ -19,11 +19,14 @@ type Actions = {
 
 export const userStore = create<State & Actions>(
   devtools(
-    (set) => ({
-      data: null,
-      setUser: (data: UserData) => set({ data }, 'user/setUser'),
-      unSetUser: () => set({ data: null }),
-    }),
-    { name: 'userState' }
+    persist(
+      (set) => ({
+        loading: false,
+        data: null,
+        setUser: (data: UserData) => set({ data }, 'user/setUser'),
+        unSetUser: () => set((state) => ({ data: null }, 'user/unSetUser')),
+      }),
+      { name: 'userState' }
+    )
   )
 );

@@ -1,4 +1,5 @@
 'use client';
+import { routesPath } from '@/common';
 import { FormField, LoginDto, loginSchema } from '@/features/auth';
 import { loginAction } from '@/services';
 import { userStore } from '@/store';
@@ -6,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Box } from '@mui/material';
 import { useAction } from 'next-safe-action/hooks';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import React from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
@@ -34,7 +35,10 @@ export const LoginForm: React.FC = () => {
   const { execute, status } = useAction(loginAction, {
     onSuccess(data) {
       if (data?.error) throw new Error(data.error);
-      if (data?.success) setUser(data?.success);
+      if (data?.success) {
+        setUser(data?.success);
+        redirect(routesPath.TIME_TRACKER);
+      }
     },
     onExecute(data) {
       console.log('start...');

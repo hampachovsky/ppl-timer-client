@@ -1,1 +1,1 @@
-export { registerActionSchema } from './registerActionSchema';
+export { placeholderSchema, registerActionSchema } from './registerActionSchema';

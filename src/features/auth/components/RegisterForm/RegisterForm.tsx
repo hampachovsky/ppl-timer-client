@@ -1,4 +1,5 @@
 'use client';
+import { routesPath } from '@/common';
 import { FormField, RegisterDto, registerSchema } from '@/features/auth';
 import { registerAction } from '@/services';
 import { userStore } from '@/store';
@@ -6,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Box } from '@mui/material';
 import { useAction } from 'next-safe-action/hooks';
+import { redirect } from 'next/navigation';
 import React from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
@@ -32,7 +34,10 @@ export const RegisterForm: React.FC = () => {
   const { execute, status } = useAction(registerAction, {
     onSuccess(data) {
       if (data?.error) throw new Error(data.error);
-      if (data?.success) setUser(data?.success);
+      if (data?.success) {
+        setUser(data?.success);
+        redirect(routesPath.TIME_TRACKER);
+      }
     },
     onExecute(data) {
       console.log('start...');

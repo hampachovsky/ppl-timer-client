@@ -8,3 +8,5 @@ export const registerActionSchema = yup
     email: yup.string().required().email(),
   })
   .required();
+
+export const placeholderSchema = yup.object().shape({});
