@@ -40,7 +40,7 @@ export const baseTheme = createTheme({
     fontFamily: roboto.style.fontFamily,
   },
   shape: {
-    borderRadius: 9,
+    borderRadius: 0,
   },
 });
 
@@ -74,7 +74,7 @@ export const darkTheme = createTheme({
     mode: 'dark',
     background: {
       default: colors.grey,
-      paper: colors.grey,
+      paper: '#1b1e26', // colors.grey,
     },
     primary: {
       main: colors.darkGreen,

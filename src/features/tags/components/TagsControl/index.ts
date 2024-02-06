@@ -1,0 +1,1 @@
+export { TagsControl } from './TagsControl';
