@@ -4,7 +4,6 @@ import { UserData, UserResponse } from '@/types';
 
 export const authAPI = {
   async login(dto: LoginDto): Promise<UserResponse> {
-    //const response = await instance.post('/auth/login', dto);
     const response = await fetchClient.request('/auth/login', {
       method: 'POST',
       body: JSON.stringify(dto),
@@ -17,7 +16,6 @@ export const authAPI = {
       method: 'POST',
       body: JSON.stringify(dto),
     });
-    // const response = await instance.post('/auth/register', dto);
     return response;
   },
   async authMe(token: string): Promise<UserData> {

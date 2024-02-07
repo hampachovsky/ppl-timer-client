@@ -10,10 +10,20 @@ declare module '@mui/material/styles' {
       danger: string;
     };
   }
+  interface Palette {
+    customBG: {
+      list: string;
+    };
+  }
   // allow configuration using `createTheme`
   interface ThemeOptions {
     status?: {
       danger?: string;
+    };
+  }
+  interface PaletteOptions {
+    customBG?: {
+      list?: string;
     };
   }
 }
@@ -27,7 +37,8 @@ export const roboto = Roboto({
 
 const colors = {
   grey: '#1A202C',
-  lightGrey: '#2c313d',
+  darkGrey: '#1b1e26',
+  lightGrey: '#20242d',
   lightGreen: '#81E6D9',
   darkGreen: '#319795',
   white: '#FFFFFF',
@@ -44,6 +55,7 @@ export const baseTheme = createTheme({
   },
 });
 
+// TODO: Update light theme
 export const lightTheme = createTheme({
   ...baseTheme,
   status: {
@@ -58,6 +70,9 @@ export const lightTheme = createTheme({
     primary: {
       main: colors.darkGreen,
     },
+    customBG: {
+      list: colors.lightGrey,
+    },
     secondary: { main: colors.darkWhite },
     error: {
       main: colors.red,
@@ -70,11 +85,15 @@ export const darkTheme = createTheme({
   status: {
     danger: orange[500],
   },
+
   palette: {
     mode: 'dark',
     background: {
       default: colors.grey,
-      paper: '#1b1e26', // colors.grey,
+      paper: colors.darkGrey,
+    },
+    customBG: {
+      list: colors.lightGrey,
     },
     primary: {
       main: colors.darkGreen,

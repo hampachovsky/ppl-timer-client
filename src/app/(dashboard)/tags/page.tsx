@@ -1,4 +1,5 @@
-import { TagsControl, TagsList } from '@/features/tags';
+import { TagsControl } from '@/features/tags';
+import { TagsList } from '@/features/tags/components/TagsList/TagsList';
 import { Box, Typography } from '@mui/material';
 
 const TagsPage = () => {

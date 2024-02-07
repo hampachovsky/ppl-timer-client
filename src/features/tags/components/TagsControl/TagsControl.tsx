@@ -1,4 +1,5 @@
 'use client';
+import { createTag } from '@/services';
 import SearchIcon from '@mui/icons-material/Search';
 import {
   Box,
@@ -15,9 +16,14 @@ import React from 'react';
 
 export const TagsControl: React.FC = () => {
   const [filter, setFilter] = React.useState('active');
+  const [tagName, setTagName] = React.useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
     setFilter(event.target.value);
+  };
+  const onAddTag = async () => {
+    await createTag(tagName);
+    setTagName('');
   };
   return (
     <Box>
@@ -49,8 +55,12 @@ export const TagsControl: React.FC = () => {
           />
         </Grid>
         <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={6}>
-          <TextField label='Додати тег' />
-          <Button sx={{ ml: 3 }} variant='contained'>
+          <TextField
+            onChange={(e) => setTagName(e.target.value)}
+            defaultValue={tagName}
+            label='Додати тег'
+          />
+          <Button onClick={() => onAddTag()} sx={{ ml: 3 }} variant='contained'>
             Додати
           </Button>
         </Grid>

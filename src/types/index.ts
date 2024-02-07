@@ -13,3 +13,9 @@ export type RequestError = {
   status: number | string;
   statusText: string;
 };
+
+export type TagData = {
+  id: string;
+  tagName: string;
+  archived: boolean;
+};

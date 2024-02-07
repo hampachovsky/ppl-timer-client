@@ -1,4 +1,4 @@
 export { placeholderSchema, registerActionSchema } from './actionSchemas';
-export { getUserAction, loginAction, registerAction } from './actions';
-export { authAPI, fetchClient, instance } from './endpoints';
+export { createTag, fetchTags, getUserAction, loginAction, registerAction } from './actions';
+export { authAPI, fetchClient, tagsAPI } from './endpoints';
 export { handleActionError } from './interceptors';
