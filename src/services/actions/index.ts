@@ -1,2 +1,2 @@
 export { getUserAction, loginAction, registerAction } from './authActions';
-export { createTag, fetchTags } from './tagActions';
+export { createTag, deleteTag, fetchTags, updateTag } from './tagActions';

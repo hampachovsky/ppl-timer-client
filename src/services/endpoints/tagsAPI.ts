@@ -22,4 +22,25 @@ export const tagsAPI = {
     );
     return response;
   },
+  async update(token: string, dto: TagData): Promise<any> {
+    const response = await fetchClient.request(
+      `/tags/${dto.id}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ tagName: dto.tagName, archived: dto.archived }),
+      },
+      token
+    );
+    return response;
+  },
+  async delete(token: string, id: string): Promise<any> {
+    const response = await fetchClient.request(
+      `/tags/${id}`,
+      {
+        method: 'DELETE',
+      },
+      token
+    );
+    return response;
+  },
 };

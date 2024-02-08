@@ -1,1 +1,1 @@
-export { Tag, TagsControl } from './components';
+export { EditTag, Tag, TagsControl } from './components';

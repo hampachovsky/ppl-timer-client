@@ -21,7 +21,7 @@ export const TagsList: React.FC = async () => {
         >
           <Box sx={{ backgroundColor: 'customBG.list' }}>
             {data.success.map((tag) => (
-              <Tag key={tag.id} id={tag.id} text={tag.tagName} archived={tag.archived} />
+              <Tag key={tag.id} id={tag.id} tagName={tag.tagName} archived={tag.archived} />
             ))}
           </Box>
         </List>

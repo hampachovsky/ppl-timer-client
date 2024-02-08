@@ -20,8 +20,7 @@ export const loginAction = action(loginSchema, async (data: LoginDto) => {
       return { success: response.user, error: null };
     }
   } catch (error: any) {
-    const e = error as RequestError;
-    return handleActionError(e, 'Користувач');
+    return handleActionError(error, 'Користувача');
   }
 });
 
@@ -37,8 +36,7 @@ export const registerAction = action(registerActionSchema, async (data: Register
       return { success: response.user, error: null };
     }
   } catch (error: any) {
-    const e = error as RequestError;
-    return handleActionError(e, 'Користувач');
+    return handleActionError(error, 'Користувача');
   }
 });
 
