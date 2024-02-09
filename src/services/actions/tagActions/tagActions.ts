@@ -1,7 +1,7 @@
 'use server';
 import { cookiesName, routesPath } from '@/common';
 import { handleActionError, tagsAPI } from '@/services';
-import { TagData } from '@/types';
+import { PageSearchParams, TagData } from '@/types';
 import { getCookie } from 'cookies-next';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -55,17 +55,21 @@ export const deleteTag = async (id: string) => {
   }
 };
 
-export const fetchTags = async () => {
+export const fetchTags = async (searchParams: PageSearchParams['searchParams']) => {
   const token = getCookie(cookiesName.TOKEN, { cookies });
   try {
     if (token) {
-      const tags = await tagsAPI.getAll(token);
+      const tags = await tagsAPI.getAll(
+        searchParams.qs as string,
+        searchParams.type as string,
+        token
+      );
       if (!tags) return { error: 'Нема тегів' };
       if (tags) return { success: tags };
     } else {
       throw new Error('Unauthorized');
     }
   } catch (err) {
-    return handleActionError(err, 'Тег');
+    return handleActionError(err, 'Тегів');
   }
 };

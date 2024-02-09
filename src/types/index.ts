@@ -19,3 +19,8 @@ export type TagData = {
   tagName: string;
   archived: boolean;
 };
+
+export type PageSearchParams = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};

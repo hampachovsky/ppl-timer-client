@@ -61,7 +61,7 @@ export const EditTag: React.FC<EditTagProps> = ({
             label='Назва тегу'
             fullWidth
             variant='outlined'
-            defaultValue={tagName}
+            value={tagName}
             onChange={handleChange}
           />
         </DialogContent>

@@ -1,10 +1,16 @@
 import { Tag } from '@/features/tags';
 import { fetchTags } from '@/services';
+import { PageSearchParams } from '@/types';
 import { Box, List, ListSubheader, Paper } from '@mui/material';
 import React from 'react';
 
-export const TagsList: React.FC = async () => {
-  const data = await fetchTags();
+type TagsListProps = {
+  params: PageSearchParams['params'];
+  searchParams: PageSearchParams['searchParams'];
+};
+
+export const TagsList: React.FC<TagsListProps> = async ({ params, searchParams }) => {
+  const data = await fetchTags(searchParams);
 
   if (data?.error) return <h1>{data.error}</h1>;
   if (data?.success) {

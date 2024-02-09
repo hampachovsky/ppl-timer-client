@@ -1,4 +1,5 @@
 'use client';
+import { useDebounce } from '@/hooks';
 import { createTag } from '@/services';
 import SearchIcon from '@mui/icons-material/Search';
 import {
@@ -12,15 +13,37 @@ import {
   SelectChangeEvent,
   TextField,
 } from '@mui/material';
-import React from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import React, { ChangeEvent, useEffect } from 'react';
 
 export const TagsControl: React.FC = () => {
   const [filter, setFilter] = React.useState('active');
   const [tagName, setTagName] = React.useState('');
+  const [queryString, setQueryString] = React.useState('');
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const debouncedValue = useDebounce<string>(queryString, 500);
+  const params = new URLSearchParams(searchParams);
 
   const handleChange = (event: SelectChangeEvent) => {
     setFilter(event.target.value);
+    params.set('type', event.target.value);
+    replace(`${pathname}?${params.toString()}`);
   };
+
+  useEffect(() => {
+    if (debouncedValue !== undefined ||  debouncedValue !==  null) {
+      params.set('qs', debouncedValue);
+      replace(`${pathname}?${params.toString()}`);
+      return;
+    }
+  }, [debouncedValue]);
+
+  const handleSearch = async (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setQueryString(event.target.value);
+  };
+
   const onAddTag = async () => {
     await createTag(tagName);
     setTagName('');
@@ -39,7 +62,7 @@ export const TagsControl: React.FC = () => {
           >
             <MenuItem value={'active'}>Активні</MenuItem>
             <MenuItem value={'archived'}>Архівовані</MenuItem>
-            <MenuItem value={'Всі'}>Всі</MenuItem>
+            <MenuItem value={'all'}>Всі</MenuItem>
           </Select>
           <OutlinedInput
             sx={{
@@ -47,6 +70,8 @@ export const TagsControl: React.FC = () => {
             }}
             type='search'
             placeholder='Пошук за назвою'
+            value={queryString}
+            onChange={handleSearch}
             startAdornment={
               <InputAdornment position='start'>
                 <SearchIcon />
@@ -57,7 +82,7 @@ export const TagsControl: React.FC = () => {
         <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={6}>
           <TextField
             onChange={(e) => setTagName(e.target.value)}
-            defaultValue={tagName}
+            value={tagName}
             label='Додати тег'
           />
           <Button onClick={() => onAddTag()} sx={{ ml: 3 }} variant='contained'>
