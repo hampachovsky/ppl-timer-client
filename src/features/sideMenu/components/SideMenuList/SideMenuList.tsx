@@ -11,6 +11,7 @@ export const SideMenuList: React.FC = () => {
     <List sx={{ py: 0 }}>
       {constants.MENU_ITEMS.map(({ route, icon: Icon, text }) => (
         <ListItem
+          disablePadding
           key={route}
           sx={{
             display: 'flex',

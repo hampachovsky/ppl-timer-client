@@ -1,4 +1,5 @@
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { routesPath } from './routesPath';
 
@@ -6,7 +7,7 @@ export const constants = {
   MENU_ITEMS: [
     {
       icon: AccessTimeIcon,
-      text: 'Time Tracker',
+      text: 'Трекери часу',
       route: routesPath.TIME_TRACKER,
     },
     {
@@ -15,9 +16,9 @@ export const constants = {
       route: routesPath.TAGS,
     },
     {
-      icon: AccessTimeIcon,
-      text: 'test',
-      route: '/test',
+      icon: AccountCircleIcon,
+      text: 'Клієнти',
+      route: routesPath.CLIENTS,
     },
   ],
 };

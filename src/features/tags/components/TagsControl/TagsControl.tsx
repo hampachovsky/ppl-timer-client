@@ -33,7 +33,7 @@ export const TagsControl: React.FC = () => {
   };
 
   useEffect(() => {
-    if (debouncedValue !== undefined ||  debouncedValue !==  null) {
+    if (debouncedValue !== undefined || debouncedValue !== null) {
       params.set('qs', debouncedValue);
       replace(`${pathname}?${params.toString()}`);
       return;
