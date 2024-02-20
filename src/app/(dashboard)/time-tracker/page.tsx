@@ -1,10 +1,11 @@
-import { TrackerControl } from '@/features/timeTrackers';
+import { TrackerControl, TrackerList } from '@/features/timeTrackers';
 import { Box } from '@mui/material';
 
 const SomePage = () => {
   return (
     <Box>
       <TrackerControl />
+      <TrackerList />
     </Box>
   );
 };

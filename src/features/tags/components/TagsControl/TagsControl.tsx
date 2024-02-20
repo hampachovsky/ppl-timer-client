@@ -51,7 +51,7 @@ export const TagsControl: React.FC = () => {
   return (
     <Box>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={7} sm={6}>
           <Select
             id='select-tags'
             value={filter}
@@ -79,7 +79,7 @@ export const TagsControl: React.FC = () => {
             }
           />
         </Grid>
-        <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={6}>
+        <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={3} sm={6}>
           <TextField
             onChange={(e) => setTagName(e.target.value)}
             value={tagName}
