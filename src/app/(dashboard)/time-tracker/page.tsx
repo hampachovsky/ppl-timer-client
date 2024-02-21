@@ -1,13 +1,23 @@
 import { TrackerControl, TrackerList } from '@/features/timeTrackers';
+import { groupByWeek } from '@/lib';
+import { fetchTimers } from '@/services';
 import { Box } from '@mui/material';
 
-const SomePage = () => {
+const TimeTrackerPage = async () => {
+  const timers = await fetchTimers();
+  const groups = groupByWeek(timers?.success!);
   return (
     <Box>
       <TrackerControl />
-      <TrackerList />
+      {Object.keys(groups)
+        .reverse()
+        .map((week) => (
+          <Box key={week}>
+            <TrackerList week={week} trackers={groups[week]} />
+          </Box>
+        ))}
     </Box>
   );
 };
 
-export default SomePage;
+export default TimeTrackerPage;

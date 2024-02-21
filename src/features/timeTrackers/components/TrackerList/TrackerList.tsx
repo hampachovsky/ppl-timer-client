@@ -1,8 +1,15 @@
+import { Tracker } from '@/features/timeTrackers';
+import { TimerData } from '@/types';
 import { Box, List, ListSubheader, Paper } from '@mui/material';
 import React from 'react';
-import { Tracker } from '..';
 
-export const TrackerList: React.FC = () => {
+type TrackerListProps = {
+  week: string;
+  trackers: TimerData[];
+};
+
+export const TrackerList: React.FC<TrackerListProps> = ({ week, trackers }) => {
+  console.log(trackers);
   return (
     <Paper sx={{ my: '1.5rem' }}>
       <List
@@ -10,7 +17,7 @@ export const TrackerList: React.FC = () => {
         component='nav'
         subheader={
           <ListSubheader component='div' id='nested-list-subheader'>
-            Сьогодні
+            {week}
           </ListSubheader>
         }
       >

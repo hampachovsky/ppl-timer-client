@@ -24,3 +24,22 @@ export type PageSearchParams = {
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export type TimerData = {
+  id: string;
+  timerName: string;
+  timerDescription: string;
+  timerSummary: number;
+  isRunning: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  timerIntervals: TimerIntervalData[];
+};
+
+export type TimerIntervalData = {
+  id: string;
+  intervalStart: Date;
+  intervalEnd: Date;
+  intervalDuration: number;
+  updatedAt: Date;
+};
