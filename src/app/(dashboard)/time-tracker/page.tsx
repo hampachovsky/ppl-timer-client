@@ -9,13 +9,11 @@ const TimeTrackerPage = async () => {
   return (
     <Box>
       <TrackerControl />
-      {Object.keys(groups)
-        .reverse()
-        .map((week) => (
-          <Box key={week}>
-            <TrackerList week={week} trackers={groups[week]} />
-          </Box>
-        ))}
+      {Object.keys(groups).map((week) => (
+        <Box key={week}>
+          <TrackerList week={week} trackers={groups[week]} />
+        </Box>
+      ))}
     </Box>
   );
 };

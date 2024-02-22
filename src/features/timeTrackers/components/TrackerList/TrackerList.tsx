@@ -9,7 +9,6 @@ type TrackerListProps = {
 };
 
 export const TrackerList: React.FC<TrackerListProps> = ({ week, trackers }) => {
-  console.log(trackers);
   return (
     <Paper sx={{ my: '1.5rem' }}>
       <List
@@ -22,9 +21,9 @@ export const TrackerList: React.FC<TrackerListProps> = ({ week, trackers }) => {
         }
       >
         <Box sx={{ backgroundColor: 'customBG.list' }}>
-          <Tracker />
-          <Tracker />
-          <Tracker />
+          {trackers.map((tracker) => (
+            <Tracker key={tracker.id} tracker={tracker} />
+          ))}
         </Box>
       </List>
     </Paper>

@@ -13,6 +13,7 @@ declare module '@mui/material/styles' {
   interface Palette {
     customBG: {
       list: string;
+      intervalItem?: string;
     };
   }
   // allow configuration using `createTheme`
@@ -24,6 +25,7 @@ declare module '@mui/material/styles' {
   interface PaletteOptions {
     customBG?: {
       list?: string;
+      intervalItem?: string;
     };
   }
 }
@@ -41,6 +43,7 @@ const colors = {
   lightGrey: '#20242d',
   lightGreen: '#81E6D9',
   darkGreen: '#319795',
+  lightDarkGrey: '#313847',
   white: '#FFFFFF',
   darkWhite: '#edf2f7',
   red: '#e52e3a',
@@ -72,6 +75,7 @@ export const lightTheme = createTheme({
     },
     customBG: {
       list: colors.lightGrey,
+      intervalItem: colors.lightDarkGrey,
     },
     secondary: { main: colors.darkWhite },
     error: {
@@ -94,6 +98,7 @@ export const darkTheme = createTheme({
     },
     customBG: {
       list: colors.lightGrey,
+      intervalItem: colors.lightDarkGrey,
     },
     primary: {
       main: colors.darkGreen,

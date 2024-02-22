@@ -5,7 +5,7 @@ export const timerAPI = {
   async getAll(token: string): Promise<TimerData[]> {
     const response = await fetchClient.request(
       `/timers/byUser`,
-      { next: { revalidate: 3600 } },
+      { next: { revalidate: 3600, tags: ['timers'] } },
       token
     );
     return response;

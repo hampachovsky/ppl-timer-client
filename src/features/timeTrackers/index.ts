@@ -1,1 +1,1 @@
-export { Tracker, TrackerControl, TrackerList } from './components';
+export { Tracker, TrackerControl, TrackerList, TrackerListItem } from './components';

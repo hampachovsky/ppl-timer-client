@@ -1,3 +1,3 @@
-export { formatDate } from './formatDate';
+export { formatTime } from './formatTime';
 export { groupByWeek } from './groupByWeek';
 export { action } from './safeAction';
