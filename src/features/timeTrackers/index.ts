@@ -1,1 +1,7 @@
-export { Tracker, TrackerControl, TrackerList, TrackerListItem } from './components';
+export {
+  ManualTrackerControl,
+  TimeTrackerControl,
+  Tracker,
+  TrackerList,
+  TrackerListItem,
+} from './components';

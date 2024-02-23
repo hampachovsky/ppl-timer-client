@@ -1,14 +1,35 @@
+'use client';
+import { TimerData, TimerIntervalData } from '@/types';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { Box, Button, Grid, IconButton, TextField } from '@mui/material';
+import { differenceInSeconds } from 'date-fns';
 import React from 'react';
+import { useStopwatch } from 'react-timer-hook';
 
-export const TrackerControl: React.FC = () => {
+type TimeTrackerControlProps = {
+  startedTimer: TimerData;
+  startedInterval: TimerIntervalData;
+};
+
+export const TimeTrackerControl: React.FC<TimeTrackerControlProps> = ({
+  startedTimer,
+  startedInterval,
+}) => {
+  const stopwatchOffset = new Date();
+  const secOffset = differenceInSeconds(startedInterval?.intervalStart, stopwatchOffset);
+  stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + Math.abs(secOffset));
+  const { totalSeconds, seconds, minutes, hours, days, isRunning, start, pause, reset } =
+    useStopwatch({
+      autoStart: true,
+      offsetTimestamp: stopwatchOffset,
+    });
+
   return (
     <Box sx={{ backgroundColor: 'background.paper', padding: '0.7em' }}>
       <Grid container spacing={2}>
         <Grid item xs={7}>
-          <TextField fullWidth placeholder='Над чим працюєте?' />
+          <TextField fullWidth value={startedTimer.timerName} />
         </Grid>
         <Grid item>
           <Button
@@ -37,7 +58,7 @@ export const TrackerControl: React.FC = () => {
         </Grid>
 
         <Grid xs={2} item>
-          <TextField fullWidth defaultValue={'00:00:00'} />
+          <TextField fullWidth value={`${hours}:${minutes}:${seconds}`} />
         </Grid>
         <Grid justifyContent='end' item xs={1}>
           <Button sx={{ height: '100%' }} variant='contained'>

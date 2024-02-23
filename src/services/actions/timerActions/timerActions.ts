@@ -9,8 +9,8 @@ export const fetchTimers = async () => {
   try {
     if (token) {
       const timers = await timerAPI.getAll(token);
-      if (!timers) return { error: 'Нема таймерів' };
-      if (timers) return { success: timers };
+      if (!timers) return { error: 'Нема таймерів', success: null };
+      if (timers) return { success: timers, error: null };
     } else {
       throw new Error('Unauthorized');
     }
