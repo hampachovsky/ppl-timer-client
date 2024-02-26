@@ -26,7 +26,7 @@ const TimeTrackerPage = async () => {
         .reverse()
         .map((week) => (
           <Box key={week}>
-            <TrackerList week={week} trackers={groups[week]} />
+            <TrackerList week={week} trackers={groups[week]} startedInterval={startedInterval} />
           </Box>
         ))}
     </Box>

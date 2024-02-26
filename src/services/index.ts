@@ -7,6 +7,8 @@ export {
   getUserAction,
   loginAction,
   registerAction,
+  startTimer,
+  stopTimer,
   updateTag,
 } from './actions';
 export { authAPI, fetchClient, tagsAPI, timerAPI } from './endpoints';

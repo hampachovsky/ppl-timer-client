@@ -1,5 +1,7 @@
 'use client';
 import { formatTime } from '@/lib';
+import { startTimer } from '@/services';
+import { TimerIntervalData } from '@/types';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -13,6 +15,8 @@ type TrackerListItemProps = {
   timerSummary: number;
   isInterval?: boolean;
   intervalCount?: number;
+  isRunning?: boolean;
+  startedInterval?: TimerIntervalData;
   handleOpenIntervalList?: () => void;
 };
 
@@ -21,11 +25,17 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
   timerSummary,
   id,
   intervalCount = 0,
+  isRunning = false,
+  startedInterval,
   isInterval = false,
   handleOpenIntervalList,
 }) => {
-  const handleClick = () => {
+  const handleOpenIntervalListClick = () => {
     handleOpenIntervalList && handleOpenIntervalList();
+  };
+
+  const handleStartTimer = async () => {
+    await startTimer(id, new Date());
   };
   return (
     <Box sx={{ backgroundColor: isInterval ? 'customBG.intervalItem' : '' }} key={id}>
@@ -41,7 +51,7 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
                   backgroundColor: 'background.paper',
                 }}
                 label={intervalCount}
-                onClick={handleClick}
+                onClick={handleOpenIntervalListClick}
               />
             )}
             <TextField
@@ -90,6 +100,8 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
                 borderLeft: '1px dashed',
                 borderColor: 'background.paper',
               }}
+              disabled={!!startedInterval}
+              onClick={handleStartTimer}
             >
               <PlayArrowOutlinedIcon sx={{ fontSize: '30px' }} />
             </IconButton>

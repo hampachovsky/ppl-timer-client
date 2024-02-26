@@ -1,14 +1,15 @@
 import { Tracker } from '@/features/timeTrackers';
-import { TimerData } from '@/types';
+import { TimerData, TimerIntervalData } from '@/types';
 import { Box, List, ListSubheader, Paper } from '@mui/material';
 import React from 'react';
 
 type TrackerListProps = {
   week: string;
   trackers: TimerData[];
+  startedInterval: TimerIntervalData;
 };
 
-export const TrackerList: React.FC<TrackerListProps> = ({ week, trackers }) => {
+export const TrackerList: React.FC<TrackerListProps> = ({ week, trackers, startedInterval }) => {
   return (
     <Paper sx={{ my: '1.5rem' }}>
       <List
@@ -22,7 +23,7 @@ export const TrackerList: React.FC<TrackerListProps> = ({ week, trackers }) => {
       >
         <Box sx={{ backgroundColor: 'customBG.list' }}>
           {trackers.map((tracker) => (
-            <Tracker key={tracker.id} tracker={tracker} />
+            <Tracker key={tracker.id} tracker={tracker} startedInterval={startedInterval} />
           ))}
         </Box>
       </List>

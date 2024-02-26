@@ -1,4 +1,5 @@
 'use client';
+import { stopTimer } from '@/services';
 import { TimerData, TimerIntervalData } from '@/types';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
@@ -24,6 +25,16 @@ export const TimeTrackerControl: React.FC<TimeTrackerControlProps> = ({
       autoStart: true,
       offsetTimestamp: stopwatchOffset,
     });
+
+  const handleStopTimer = async () => {
+    console.log(startedTimer, startedInterval);
+    const r = await stopTimer(startedTimer.id, {
+      intervalId: startedInterval.id,
+      intervalEnd: new Date(),
+      intervalDuration: totalSeconds,
+    });
+    console.log(r);
+  };
 
   return (
     <Box sx={{ backgroundColor: 'background.paper', padding: '0.7em' }}>
@@ -61,8 +72,12 @@ export const TimeTrackerControl: React.FC<TimeTrackerControlProps> = ({
           <TextField fullWidth value={`${hours}:${minutes}:${seconds}`} />
         </Grid>
         <Grid justifyContent='end' item xs={1}>
-          <Button sx={{ height: '100%' }} variant='contained'>
-            Старт
+          <Button
+            sx={{ height: '100%', backgroundColor: 'error.main', width: '99%' }}
+            variant='contained'
+            onClick={handleStopTimer}
+          >
+            Зупинити
           </Button>
         </Grid>
       </Grid>

@@ -43,3 +43,9 @@ export type TimerIntervalData = {
   intervalDuration: number;
   updatedAt: Date;
 };
+
+export type StopTimerDto = {
+  intervalId: string;
+  intervalEnd: Date;
+  intervalDuration: number;
+};
