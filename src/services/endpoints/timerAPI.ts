@@ -21,6 +21,17 @@ export const timerAPI = {
     );
     return response;
   },
+  async update(token: string, dto: Partial<TimerData>): Promise<any> {
+    const response = await fetchClient.request(
+      `/timers/${dto.id}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ ...dto }),
+      },
+      token
+    );
+    return response;
+  },
   async stopTimer(token: string, id: string, dto: StopTimerDto) {
     const response = await fetchClient.request(
       `/timers/stopTimer/${id}`,
@@ -31,6 +42,27 @@ export const timerAPI = {
           intervalEnd: dto.intervalEnd,
           intervalDuration: dto.intervalDuration,
         }),
+      },
+      token
+    );
+    return response;
+  },
+
+  async delete(token: string, id: string): Promise<any> {
+    const response = await fetchClient.request(
+      `/timers/${id}`,
+      {
+        method: 'DELETE',
+      },
+      token
+    );
+    return response;
+  },
+  async deleteInterval(token: string, id: string): Promise<any> {
+    const response = await fetchClient.request(
+      `/intervals/${id}`,
+      {
+        method: 'DELETE',
       },
       token
     );

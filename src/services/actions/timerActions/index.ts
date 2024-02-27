@@ -1,1 +1,1 @@
-export { fetchTimers, startTimer, stopTimer } from './timerActions';
+export { deleteTimer, fetchTimers, startTimer, stopTimer, updateTimer } from './timerActions';

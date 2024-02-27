@@ -1,7 +1,7 @@
 'use server';
 import { cookiesName, routesPath } from '@/common';
 import { handleActionError, timerAPI } from '@/services';
-import { StopTimerDto } from '@/types';
+import { StopTimerDto, TimerData } from '@/types';
 import { getCookie } from 'cookies-next';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -45,6 +45,45 @@ export const stopTimer = async (id: string, dto: StopTimerDto) => {
       revalidatePath(routesPath.TIME_TRACKER);
       if (!timer) return { error: 'Нема таймеру' };
       if (timer) return { success: 'Таймер успішно зупинено' };
+    } else {
+      throw new Error('Unauthorized');
+    }
+  } catch (err) {
+    return handleActionError(err, 'Таймер');
+  }
+};
+
+export const updateTimer = async (dto: Partial<TimerData>) => {
+  const token = getCookie(cookiesName.TOKEN, { cookies });
+  try {
+    if (token) {
+      const tags = await timerAPI.update(token, dto);
+      revalidatePath(routesPath.TAGS);
+      if (!tags) return { error: 'Нема таймеру' };
+      if (tags) return { success: 'Таймер успішно оновленно' };
+    } else {
+      throw new Error('Unauthorized');
+    }
+  } catch (err) {
+    return handleActionError(err, 'Таймер');
+  }
+};
+
+export const deleteTimer = async (id: string, isInterval = false) => {
+  const token = getCookie(cookiesName.TOKEN, { cookies });
+  try {
+    if (token) {
+      if (isInterval) {
+        const response = await timerAPI.deleteInterval(token, id);
+        revalidatePath(routesPath.TIME_TRACKER);
+        if (!response) return { error: 'Нема інтервалу' };
+        if (response) return { success: 'Інтервал успішно видалено' };
+      } else {
+        const response = await timerAPI.delete(token, id);
+        revalidatePath(routesPath.TIME_TRACKER);
+        if (!response) return { error: 'Нема таймеру' };
+        if (response) return { success: 'Таймер успішно видалено' };
+      }
     } else {
       throw new Error('Unauthorized');
     }

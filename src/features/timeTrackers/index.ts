@@ -4,4 +4,5 @@ export {
   Tracker,
   TrackerList,
   TrackerListItem,
+  TrackerNameInput,
 } from './components';

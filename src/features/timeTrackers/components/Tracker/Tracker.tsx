@@ -34,6 +34,7 @@ export const Tracker: React.FC<TrackerProps> = ({ tracker, startedInterval }) =>
                 isInterval
                 key={interval.id}
                 id={interval.id}
+                timerId={tracker.id}
                 timerName={tracker.timerName}
                 timerSummary={interval.intervalDuration}
                 isRunning={tracker.isRunning}

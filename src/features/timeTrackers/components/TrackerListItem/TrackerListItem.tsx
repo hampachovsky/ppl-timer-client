@@ -1,12 +1,24 @@
 'use client';
+import { TrackerNameInput } from '@/features/timeTrackers';
 import { formatTime } from '@/lib';
-import { startTimer } from '@/services';
+import { deleteTimer, startTimer } from '@/services';
 import { TimerIntervalData } from '@/types';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
-import { Box, Button, Chip, Divider, Grid, IconButton, ListItem, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Chip,
+  Divider,
+  Grid,
+  IconButton,
+  ListItem,
+  Menu,
+  MenuItem,
+  TextField,
+} from '@mui/material';
 import React from 'react';
 
 type TrackerListItemProps = {
@@ -16,6 +28,7 @@ type TrackerListItemProps = {
   isInterval?: boolean;
   intervalCount?: number;
   isRunning?: boolean;
+  timerId?: string;
   startedInterval?: TimerIntervalData;
   handleOpenIntervalList?: () => void;
 };
@@ -27,16 +40,33 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
   intervalCount = 0,
   isRunning = false,
   startedInterval,
+  timerId,
   isInterval = false,
   handleOpenIntervalList,
 }) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const trackerId = timerId ? timerId : id;
+
+  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
   const handleOpenIntervalListClick = () => {
     handleOpenIntervalList && handleOpenIntervalList();
   };
 
   const handleStartTimer = async () => {
-    await startTimer(id, new Date());
+    await startTimer(trackerId, new Date());
   };
+
+  const handleDeleteTracker = async () => {
+    await deleteTimer(id, isInterval);
+  };
+
   return (
     <Box sx={{ backgroundColor: isInterval ? 'customBG.intervalItem' : '' }} key={id}>
       <Divider sx={{ borderColor: 'background.paper' }} />
@@ -54,15 +84,7 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
                 onClick={handleOpenIntervalListClick}
               />
             )}
-            <TextField
-              sx={{
-                width: '90%',
-                ml: '0.5em',
-              }}
-              variant='standard'
-              value={timerName}
-              InputProps={{ disableUnderline: true }}
-            />
+            <TrackerNameInput timerName={timerName} timerId={trackerId} />
           </Grid>
           <Grid item xs={2} md={2}>
             <Button
@@ -114,10 +136,26 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
               }}
               edge='end'
               aria-label='more'
+              onClick={handleOpenMenu}
             >
               <MoreVertIcon sx={{ fontSize: '30px' }} />
             </IconButton>
           </Grid>
+          <Menu
+            id='tags-basic-menu'
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleCloseMenu}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <Box component='div'>
+              <MenuItem sx={{ color: 'error.main' }} onClick={handleDeleteTracker}>
+                Видалити
+              </MenuItem>
+            </Box>
+          </Menu>
         </Grid>
       </ListItem>
     </Box>
