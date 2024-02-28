@@ -21,6 +21,22 @@ export const fetchTimers = async () => {
   }
 };
 
+export const createTimer = async (timerName: string) => {
+  const token = getCookie(cookiesName.TOKEN, { cookies });
+  try {
+    if (token) {
+      const timer = await timerAPI.create(timerName, token);
+      revalidatePath(routesPath.TIME_TRACKER);
+      if (!timer) return { error: 'Нема таймерів' };
+      if (timer) return { success: timer };
+    } else {
+      throw new Error('Unauthorized');
+    }
+  } catch (err) {
+    return handleActionError(err, 'Таймер');
+  }
+};
+
 export const startTimer = async (id: string, intervalStart: Date) => {
   const token = getCookie(cookiesName.TOKEN, { cookies });
   try {
@@ -58,7 +74,7 @@ export const updateTimer = async (dto: Partial<TimerData>) => {
   try {
     if (token) {
       const tags = await timerAPI.update(token, dto);
-      revalidatePath(routesPath.TAGS);
+      revalidatePath(routesPath.TIME_TRACKER);
       if (!tags) return { error: 'Нема таймеру' };
       if (tags) return { success: 'Таймер успішно оновленно' };
     } else {

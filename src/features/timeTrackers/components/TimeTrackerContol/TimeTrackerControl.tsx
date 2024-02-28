@@ -27,7 +27,6 @@ export const TimeTrackerControl: React.FC<TimeTrackerControlProps> = ({
     });
 
   const handleStopTimer = async () => {
-    console.log(startedTimer, startedInterval);
     const r = await stopTimer(startedTimer.id, {
       intervalId: startedInterval.id,
       intervalEnd: new Date(),

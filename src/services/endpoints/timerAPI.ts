@@ -10,6 +10,18 @@ export const timerAPI = {
     );
     return response;
   },
+  async create(timerName: string, token: string): Promise<TimerData> {
+    const response = await fetchClient.request(
+      '/timers',
+      {
+        method: 'POST',
+        body: JSON.stringify({ timerName }),
+      },
+      token
+    );
+
+    return response;
+  },
   async startTimer(token: string, id: string, intervalStart: Date) {
     const response = await fetchClient.request(
       `/timers/startTimer/${id}`,
@@ -21,6 +33,7 @@ export const timerAPI = {
     );
     return response;
   },
+
   async update(token: string, dto: Partial<TimerData>): Promise<any> {
     const response = await fetchClient.request(
       `/timers/${dto.id}`,
