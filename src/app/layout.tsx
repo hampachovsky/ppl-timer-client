@@ -1,7 +1,9 @@
-import { darkTheme } from '@/common';
+import { cookiesName, darkTheme, lightTheme } from '@/common';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
+import { getCookie } from 'cookies-next';
+import { cookies } from 'next/headers';
 
 export const metadata = {
   title: 'PPL-timer',
@@ -10,6 +12,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const theme = getCookie(cookiesName.THEME, { cookies });
   return (
     <html lang='en'>
       <head>
@@ -17,7 +20,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={darkTheme}>
+          <ThemeProvider theme={theme == 'dark' ? darkTheme : lightTheme}>
             <CssBaseline />
             {children}
           </ThemeProvider>

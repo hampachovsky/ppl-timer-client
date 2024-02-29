@@ -46,6 +46,8 @@ const colors = {
   lightDarkGrey: '#313847',
   white: '#FFFFFF',
   darkWhite: '#edf2f7',
+  greyDark: '#e4eaee',
+  lightBlue: '#e8f0f4',
   red: '#e52e3a',
 };
 
@@ -68,14 +70,14 @@ export const lightTheme = createTheme({
     mode: 'light',
     background: {
       default: colors.darkWhite,
-      paper: colors.darkWhite,
+      paper: colors.greyDark,
     },
     primary: {
       main: colors.darkGreen,
     },
     customBG: {
-      list: colors.lightGrey,
-      intervalItem: colors.lightDarkGrey,
+      list: colors.darkWhite,
+      intervalItem: colors.lightBlue,
     },
     secondary: { main: colors.darkWhite },
     error: {

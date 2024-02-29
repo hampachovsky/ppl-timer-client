@@ -11,19 +11,22 @@ type TrackerNameInputProps = {
 
 export const TrackerNameInput: React.FC<TrackerNameInputProps> = ({ timerName = '', timerId }) => {
   const [text, setText] = React.useState(timerName);
+  const [isTouched, setIsTouched] = React.useState(false);
   const debouncedValue = useDebounce<string>(text, 700);
 
   useEffect(() => {
-    const callUpdate = async () => {
-      await updateTimer({ id: timerId, timerName: debouncedValue });
-    };
-    if (debouncedValue !== undefined || debouncedValue !== null) {
+    if ((debouncedValue !== undefined || debouncedValue !== null) && isTouched) {
+      const callUpdate = async () => {
+        await updateTimer({ id: timerId, timerName: debouncedValue });
+      };
       callUpdate();
+      setIsTouched(false);
     }
   }, [debouncedValue]);
 
   const handleTextChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setText(e.target.value);
+    setIsTouched(true);
   };
   return (
     <TextField
