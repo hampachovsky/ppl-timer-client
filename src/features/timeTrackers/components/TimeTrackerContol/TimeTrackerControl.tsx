@@ -26,6 +26,8 @@ export const TimeTrackerControl: React.FC<TimeTrackerControlProps> = ({
       offsetTimestamp: stopwatchOffset,
     });
 
+  const padTime = React.useCallback((number: number) => number.toString().padStart(2, '0'), []);
+
   const handleStopTimer = async () => {
     const r = await stopTimer(startedTimer.id, {
       intervalId: startedInterval.id,
@@ -68,7 +70,10 @@ export const TimeTrackerControl: React.FC<TimeTrackerControlProps> = ({
         </Grid>
 
         <Grid xs={2} item>
-          <TextField fullWidth value={`${hours}:${minutes}:${seconds}`} />
+          <TextField
+            fullWidth
+            value={`${padTime(hours)}:${padTime(minutes)}:${padTime(seconds)}`}
+          />
         </Grid>
         <Grid justifyContent='end' item xs={1}>
           <Button
