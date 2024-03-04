@@ -49,3 +49,10 @@ export type StopTimerDto = {
   intervalEnd: Date;
   intervalDuration: number;
 };
+
+export type ProjectFiltersToApplyDto = {
+  projectType: string;
+  clients: string[];
+  billable: boolean | null;
+  projectName: string;
+};
