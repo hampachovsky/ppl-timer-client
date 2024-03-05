@@ -1,4 +1,4 @@
-import { ProjectFilter } from '@/features/projects';
+import { ProjectFilter, ProjectTable } from '@/features/projects';
 import { PageSearchParams } from '@/types';
 import { Typography } from '@mui/material';
 
@@ -9,6 +9,7 @@ const ProjectPage = ({ params, searchParams }: PageSearchParams) => {
         Проекти
       </Typography>
       <ProjectFilter />
+      <ProjectTable />
     </div>
   );
 };

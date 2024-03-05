@@ -4,6 +4,7 @@ export {
   createTimer,
   deleteTag,
   deleteTimer,
+  fetchProjects,
   fetchTags,
   fetchTimers,
   getUserAction,
@@ -14,5 +15,5 @@ export {
   updateTag,
   updateTimer,
 } from './actions';
-export { authAPI, fetchClient, tagsAPI, timerAPI } from './endpoints';
+export { authAPI, fetchClient, projectsAPI, tagsAPI, timerAPI } from './endpoints';
 export { handleActionError } from './interceptors';

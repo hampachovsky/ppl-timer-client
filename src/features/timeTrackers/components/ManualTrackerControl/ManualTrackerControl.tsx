@@ -30,7 +30,13 @@ export const ManualTrackerControl: React.FC = () => {
   };
 
   return (
-    <Box sx={{ backgroundColor: 'background.paper', padding: '0.7em' }}>
+    <Box
+      sx={{
+        backgroundColor: 'background.paper',
+        padding: '0.7em',
+        boxShadow: 1,
+      }}
+    >
       <Grid container spacing={2}>
         <Grid item xs={7}>
           <TextField

@@ -26,7 +26,13 @@ export const ProjectFilter: React.FC = () => {
   );
 
   return (
-    <Box sx={{ backgroundColor: 'background.paper', padding: '0.7em' }}>
+    <Box
+      sx={{
+        backgroundColor: 'background.paper',
+        boxShadow: 1,
+        padding: '0.7em',
+      }}
+    >
       <Grid container>
         <Grid sx={{ boxSizing: 'border-box', flexWrap: 'nowrap' }} item xs={5} sm={6}>
           <TypeFilter
@@ -81,10 +87,15 @@ export const ProjectFilter: React.FC = () => {
             <MenuItem value={'nonBillable'}>Не оплачується</MenuItem>
           </Select>
         </Grid>
-        <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={2} sm={4}>
+        <Grid
+          sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+          item
+          xs={2}
+          sm={4}
+        >
           <OutlinedInput
             sx={{
-              ml: 2,
+              height: '80%',
             }}
             type='search'
             placeholder='Пошук за назвою'
@@ -96,8 +107,16 @@ export const ProjectFilter: React.FC = () => {
             }
           />
         </Grid>
-        <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={2} sm={2}>
-          <Button sx={{ ml: 3, maxHeight: '75px' }} variant='contained'>
+        <Grid
+          sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          item
+          xs={2}
+          sm={2}
+        >
+          <Button
+            sx={{ height: '80%', width: { sm: '100%', md: '80%' }, ml: 1 }}
+            variant='contained'
+          >
             Примінити фільтри
           </Button>
         </Grid>

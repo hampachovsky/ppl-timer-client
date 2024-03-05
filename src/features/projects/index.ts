@@ -1,1 +1,1 @@
-export { ProjectFilter } from './components';
+export { ProjectFilter, ProjectTable } from './components';

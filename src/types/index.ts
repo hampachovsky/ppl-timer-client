@@ -36,6 +36,27 @@ export type TimerData = {
   timerIntervals: TimerIntervalData[];
 };
 
+export type ProjectData = {
+  id: string;
+  projectName: string;
+  projectDescription: string;
+  note: string;
+  archived: boolean;
+  billable: boolean;
+  color: string;
+  hourlyRate: number;
+  createdAt: Date;
+  client: ClientData;
+};
+
+export type ClientData = {
+  id: string;
+  clientName: string;
+  clientEmail: string;
+  clientNote: string;
+  archived: boolean;
+};
+
 export type TimerIntervalData = {
   id: string;
   intervalStart: Date;
