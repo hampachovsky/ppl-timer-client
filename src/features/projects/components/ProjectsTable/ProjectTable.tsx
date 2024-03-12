@@ -15,7 +15,6 @@ import React from 'react';
 export const ProjectTable: React.FC = async () => {
   const projects = await fetchProjects();
   if (projects?.error || projects?.success === null) return <h1>Error</h1>;
-  console.log(projects?.success);
   return (
     <TableContainer sx={{ my: '1.5rem', boxShadow: 1 }} elevation={0} component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='projects table'>
@@ -37,12 +36,10 @@ export const ProjectTable: React.FC = async () => {
                 backgroundColor: 'customBG.list',
               }}
             >
-              <TableCell component='th' scope='row'>
-                {row.projectName}
-              </TableCell>
+              <TableCell>{row.projectName}</TableCell>
               <TableCell align='right'>{row.client.clientName}</TableCell>
+              <TableCell align='right'>Сумарний час</TableCell>
               <TableCell align='right'>{row.hourlyRate}</TableCell>
-              <TableCell align='right'>{row.billable}</TableCell>
               <TableCell align='right'>
                 <IconButton
                   sx={{
