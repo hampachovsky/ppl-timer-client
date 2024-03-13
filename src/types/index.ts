@@ -77,3 +77,9 @@ export type ProjectFiltersToApplyDto = {
   billable: boolean | null;
   projectName: string;
 };
+
+export type CreateProjectDto = {
+  projectName: string;
+  color: string;
+  clientId: string | null;
+};

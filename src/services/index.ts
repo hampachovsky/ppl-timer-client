@@ -1,5 +1,6 @@
 export { placeholderSchema, registerActionSchema } from './actionSchemas';
 export {
+  createProject,
   createTag,
   createTimer,
   deleteTag,

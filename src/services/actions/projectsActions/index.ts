@@ -1,1 +1,1 @@
-export { fetchProjects } from './projectsAction';
+export { createProject, fetchProjects } from './projectsAction';

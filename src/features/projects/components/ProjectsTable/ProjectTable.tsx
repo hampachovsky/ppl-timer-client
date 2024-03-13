@@ -1,6 +1,7 @@
 import { fetchProjects } from '@/services';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
+  Chip,
   IconButton,
   Paper,
   Table,
@@ -21,9 +22,9 @@ export const ProjectTable: React.FC = async () => {
         <TableHead>
           <TableRow>
             <TableCell>Назва</TableCell>
-            <TableCell align='right'>Клієнт</TableCell>
-            <TableCell align='right'>Сумарний час</TableCell>
-            <TableCell align='right'>Оплата</TableCell>
+            <TableCell align='center'>Клієнт</TableCell>
+            <TableCell align='center'>Сумарний час</TableCell>
+            <TableCell align='center'>Оплата</TableCell>
             <TableCell align='right'></TableCell>
           </TableRow>
         </TableHead>
@@ -36,10 +37,17 @@ export const ProjectTable: React.FC = async () => {
                 backgroundColor: 'customBG.list',
               }}
             >
-              <TableCell>{row.projectName}</TableCell>
-              <TableCell align='right'>{row.client.clientName}</TableCell>
-              <TableCell align='right'>Сумарний час</TableCell>
-              <TableCell align='right'>{row.hourlyRate}</TableCell>
+              <TableCell>
+                <Chip
+                  sx={{ backgroundColor: row.color, height: '10px', width: '10px', mr: '0.6em' }}
+                />
+                {row.projectName}
+              </TableCell>
+              <TableCell align='center'>
+                {row.client !== null ? row.client.clientName : '—'}
+              </TableCell>
+              <TableCell align='center'>Сумарний час</TableCell>
+              <TableCell align='center'>{row.hourlyRate}</TableCell>
               <TableCell align='right'>
                 <IconButton
                   sx={{

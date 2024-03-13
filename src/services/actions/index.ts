@@ -6,8 +6,7 @@ export {
   fetchTimers,
   startTimer,
   stopTimer,
-  updateTimer
+  updateTimer,
 } from './timerActions';
 
-export { fetchProjects } from './projectsActions';
-
+export { createProject, fetchProjects } from './projectsActions';

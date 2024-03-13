@@ -1,4 +1,5 @@
 'use client';
+import { createProject } from '@/services';
 import SearchIcon from '@mui/icons-material/Search';
 import {
   Box,
@@ -13,6 +14,7 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from '@mui/material';
@@ -21,15 +23,33 @@ import { HexColorPicker } from 'react-colorful';
 
 export const CreateProjectModal: React.FC = () => {
   const [open, setOpen] = React.useState(false);
+  const [projectName, setProjectName] = React.useState('');
+  const [clientId, setClientId] = React.useState<null | string>(null);
   const [color, setColor] = React.useState('#000000');
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleChangeColor = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setColor(e.target.value);
+  const handleChangeProjectName = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setProjectName(event.target.value);
   };
+
+  const handleChangeColor = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setColor(event.target.value);
+  };
+
+  const handleChangeClient = (event: SelectChangeEvent) => {
+    setClientId(event.target.value);
+  };
+
+  /*   const handleSubmit = async () => {
+    const d = await createProject({ projectName, color, clientId });
+    console.log(d);
+    handleClose();
+  }; */
 
   const handleClose = () => {
     setOpen(false);
@@ -45,7 +65,10 @@ export const CreateProjectModal: React.FC = () => {
         fullWidth
         PaperProps={{
           component: 'form',
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+          onSubmit: async (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            const d = await createProject({ projectName, color, clientId });
+            console.log(d);
             handleClose();
           },
         }}
@@ -66,11 +89,18 @@ export const CreateProjectModal: React.FC = () => {
                   label='Назва проекту'
                   type='text'
                   fullWidth
+                  value={projectName}
+                  onChange={handleChangeProjectName}
                   variant='outlined'
                 />
               </Box>
               <Box sx={{ width: '40%' }}>
-                <Select variant='outlined' defaultValue={'none'} fullWidth>
+                <Select
+                  variant='outlined'
+                  defaultValue={'none'}
+                  fullWidth
+                  onChange={handleChangeClient}
+                >
                   <OutlinedInput
                     sx={{
                       mb: 2,

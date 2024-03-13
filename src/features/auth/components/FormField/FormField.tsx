@@ -36,7 +36,6 @@ export const FormField: React.FC<FormFieldProps> = ({
             autoFocus={autoFocus}
             helperText={error}
             error={!!error}
-            sx={sx}
             {...field}
           />
         )}

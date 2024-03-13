@@ -1,8 +1,10 @@
 'use server';
 
-import { cookiesName } from '@/common';
+import { cookiesName, routesPath } from '@/common';
 import { handleActionError, projectsAPI } from '@/services';
+import { CreateProjectDto } from '@/types';
 import { getCookie } from 'cookies-next';
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export const fetchProjects = async () => {
@@ -17,5 +19,21 @@ export const fetchProjects = async () => {
     }
   } catch (err) {
     return handleActionError(err, 'Проекти');
+  }
+};
+
+export const createProject = async (createProjectDto: CreateProjectDto) => {
+  const token = getCookie(cookiesName.TOKEN, { cookies });
+  try {
+    if (token) {
+      const project = await projectsAPI.create(token, createProjectDto);
+      revalidatePath(routesPath.PROJECTS);
+      if (!project) return { error: 'Нема проекту' };
+      if (project) return { success: project };
+    } else {
+      throw new Error('Unauthorized');
+    }
+  } catch (err) {
+    return handleActionError(err, 'Проект');
   }
 };
