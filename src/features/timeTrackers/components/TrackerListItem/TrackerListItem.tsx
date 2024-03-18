@@ -1,10 +1,9 @@
 'use client';
-import { TrackerNameInput } from '@/features/timeTrackers';
+import { TagNames, TrackerNameInput } from '@/features/timeTrackers';
 import { formatTime } from '@/lib';
 import { deleteTimer, startTimer } from '@/services';
-import { TimerIntervalData } from '@/types';
+import { TagData, TimerIntervalData } from '@/types';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
 import {
@@ -30,6 +29,8 @@ type TrackerListItemProps = {
   isRunning?: boolean;
   timerId?: string;
   startedInterval?: TimerIntervalData;
+  tags: TagData[];
+  fetchedTags: TagData[];
   handleOpenIntervalList?: () => void;
 };
 
@@ -42,7 +43,9 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
   startedInterval,
   timerId,
   isInterval = false,
+  tags,
   handleOpenIntervalList,
+  fetchedTags,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -99,17 +102,7 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
             </Button>
           </Grid>
           <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={2} md={2}>
-            <IconButton
-              sx={{
-                borderRadius: 0,
-                height: '100%',
-                borderRight: '1px dashed',
-                borderLeft: '1px dashed',
-                borderColor: 'background.paper',
-              }}
-            >
-              <LocalOfferOutlinedIcon sx={{ fontSize: '30px' }} />
-            </IconButton>
+            <TagNames tags={tags} fetchedTags={fetchedTags} />
           </Grid>
           <Grid sx={{ display: 'flex', justifyContent: 'center' }} item xs={2} md={3}>
             <TextField value={formatTime(timerSummary)} />

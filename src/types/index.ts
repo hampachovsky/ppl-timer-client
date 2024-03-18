@@ -34,6 +34,7 @@ export type TimerData = {
   createdAt: Date;
   updatedAt: Date;
   timerIntervals: TimerIntervalData[];
+  tags: TagData[];
 };
 
 export type ProjectData = {

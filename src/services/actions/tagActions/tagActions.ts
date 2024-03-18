@@ -3,7 +3,7 @@ import { cookiesName, routesPath } from '@/common';
 import { handleActionError, tagsAPI } from '@/services';
 import { PageSearchParams, TagData } from '@/types';
 import { getCookie } from 'cookies-next';
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 // TODO: ERROR MESAGE CONSTANT
@@ -12,7 +12,7 @@ export const createTag = async (tagName: string) => {
   try {
     if (token) {
       const tags = await tagsAPI.create(tagName, token);
-      revalidatePath(routesPath.TAGS);
+      revalidateTag(routesPath.TAGS);
       if (!tags) return { error: 'Нема тегів' };
       if (tags) return { success: tags };
     } else {
@@ -28,7 +28,7 @@ export const updateTag = async (tag: TagData) => {
   try {
     if (token) {
       const tags = await tagsAPI.update(token, tag);
-      revalidatePath(routesPath.TAGS);
+      revalidateTag(routesPath.TAGS);
       if (!tags) return { error: 'Нема тегу' };
       if (tags) return { success: 'Тег успішно оновленно' };
     } else {
@@ -44,7 +44,7 @@ export const deleteTag = async (id: string) => {
   try {
     if (token) {
       const tags = await tagsAPI.delete(token, id);
-      revalidatePath(routesPath.TAGS);
+      revalidateTag(routesPath.TAGS);
       if (!tags) return { error: 'Нема тегу' };
       if (tags) return { success: 'Тег успішно видалено' };
     } else {
@@ -55,7 +55,9 @@ export const deleteTag = async (id: string) => {
   }
 };
 
-export const fetchTags = async (searchParams: PageSearchParams['searchParams']) => {
+export const fetchTags = async (
+  searchParams: PageSearchParams['searchParams'] = { qs: '', type: '' }
+) => {
   const token = getCookie(cookiesName.TOKEN, { cookies });
   try {
     if (token) {

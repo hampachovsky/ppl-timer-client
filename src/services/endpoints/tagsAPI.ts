@@ -17,7 +17,7 @@ export const tagsAPI = {
   async getAll(qs: string = '', type: string = 'active', token: string): Promise<TagData[]> {
     const response = await fetchClient.request(
       `/tags/byUser?type=${type}&qs=${qs}`,
-      { next: { revalidate: 3600 } },
+      { next: { revalidate: 3600, tags: ['/tags'] } },
       token
     );
     return response;
