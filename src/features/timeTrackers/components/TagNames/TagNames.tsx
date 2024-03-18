@@ -44,12 +44,9 @@ export const TagNames: React.FC<TagNamesProps> = ({ tags, fetchedTags }) => {
   const handleCheckTag = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setTagsToAssign([...tagsToAssign, e.target.value]);
-      console.log('added', tagsToAssign);
     } else {
-      console.log('test', tagsToAssign);
       const filtered = tagsToAssign.filter((tag) => tag !== e.target.value);
       setTagsToAssign(filtered);
-      console.log('deleted', filtered);
     }
   };
 
