@@ -1,5 +1,5 @@
 import { fetchClient } from '@/services';
-import { StopTimerDto, TimerData } from '@/types';
+import { StopTimerDto, TagData, TimerData } from '@/types';
 
 export const timerAPI = {
   async getAll(token: string): Promise<TimerData[]> {
@@ -22,6 +22,7 @@ export const timerAPI = {
 
     return response;
   },
+
   async startTimer(token: string, id: string, intervalStart: Date) {
     const response = await fetchClient.request(
       `/timers/startTimer/${id}`,
@@ -45,6 +46,7 @@ export const timerAPI = {
     );
     return response;
   },
+
   async stopTimer(token: string, id: string, dto: StopTimerDto) {
     const response = await fetchClient.request(
       `/timers/stopTimer/${id}`,
@@ -71,11 +73,24 @@ export const timerAPI = {
     );
     return response;
   },
+
   async deleteInterval(token: string, id: string): Promise<any> {
     const response = await fetchClient.request(
       `/intervals/${id}`,
       {
         method: 'DELETE',
+      },
+      token
+    );
+    return response;
+  },
+
+  async updateTagsForTimer(token: string, dto: TagData['id'][], id: string): Promise<any> {
+    const response = await fetchClient.request(
+      `/timers/updateTagsForTimer/${id}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ tagIds: dto }),
       },
       token
     );

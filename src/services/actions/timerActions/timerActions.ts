@@ -1,9 +1,9 @@
 'use server';
 import { cookiesName, routesPath } from '@/common';
 import { handleActionError, timerAPI } from '@/services';
-import { StopTimerDto, TimerData } from '@/types';
+import { StopTimerDto, TagData, TimerData } from '@/types';
 import { getCookie } from 'cookies-next';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export const fetchTimers = async () => {
@@ -73,10 +73,27 @@ export const updateTimer = async (dto: Partial<TimerData>) => {
   const token = getCookie(cookiesName.TOKEN, { cookies });
   try {
     if (token) {
-      const tags = await timerAPI.update(token, dto);
+      const timer = await timerAPI.update(token, dto);
       revalidatePath(routesPath.TIME_TRACKER);
-      if (!tags) return { error: 'Нема таймеру' };
-      if (tags) return { success: 'Таймер успішно оновленно' };
+      if (!timer) return { error: 'Нема таймеру' };
+      if (timer) return { success: 'Таймер успішно оновленно' };
+    } else {
+      throw new Error('Unauthorized');
+    }
+  } catch (err) {
+    return handleActionError(err, 'Таймер');
+  }
+};
+
+export const updateTagsForTimer = async (dto: TagData['id'][], id: string) => {
+  const token = getCookie(cookiesName.TOKEN, { cookies });
+  try {
+    if (token) {
+      const timer = await timerAPI.updateTagsForTimer(token, dto, id);
+      revalidatePath(routesPath.TIME_TRACKER);
+      revalidateTag(routesPath.TAGS);
+      if (!timer) return { error: 'Нема таймеру' };
+      if (timer) return { success: 'Таймер успішно оновленно' };
     } else {
       throw new Error('Unauthorized');
     }

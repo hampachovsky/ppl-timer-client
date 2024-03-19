@@ -6,6 +6,7 @@ export {
   fetchTimers,
   startTimer,
   stopTimer,
+  updateTagsForTimer,
   updateTimer,
 } from './timerActions';
 

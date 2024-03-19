@@ -1,8 +1,9 @@
 export {
+  createTimer,
   deleteTimer,
   fetchTimers,
   startTimer,
   stopTimer,
+  updateTagsForTimer,
   updateTimer,
-  createTimer,
 } from './timerActions';

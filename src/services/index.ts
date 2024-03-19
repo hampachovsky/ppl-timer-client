@@ -14,6 +14,7 @@ export {
   startTimer,
   stopTimer,
   updateTag,
+  updateTagsForTimer,
   updateTimer,
 } from './actions';
 export { authAPI, fetchClient, projectsAPI, tagsAPI, timerAPI } from './endpoints';

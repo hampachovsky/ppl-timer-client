@@ -75,7 +75,7 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
       <Divider sx={{ borderColor: 'background.paper' }} />
       <ListItem>
         <Grid container spacing={1} sx={{ px: '0.5em' }}>
-          <Grid sx={{ display: 'flex', alignItems: 'center' }} item xs={3} md={4}>
+          <Grid sx={{ display: 'flex', alignItems: 'center' }} item xs={2} md={3}>
             {intervalCount > 0 && (
               <Chip
                 sx={{
@@ -101,10 +101,10 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
               Проект
             </Button>
           </Grid>
-          <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={2} md={2}>
-            <TagNames tags={tags} fetchedTags={fetchedTags} />
+          <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={3} md={4}>
+            <TagNames timerId={trackerId} timerTags={tags} fetchedTags={fetchedTags} />
           </Grid>
-          <Grid sx={{ display: 'flex', justifyContent: 'center' }} item xs={2} md={3}>
+          <Grid sx={{ display: 'flex', justifyContent: 'center' }} item xs={2} md={2}>
             <TextField value={formatTime(timerSummary)} />
           </Grid>
           <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={3} md={1}>

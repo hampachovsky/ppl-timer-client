@@ -1,4 +1,5 @@
 'use client';
+import { updateTagsForTimer } from '@/services';
 import { TagData } from '@/types';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import SearchIcon from '@mui/icons-material/Search';
@@ -19,16 +20,19 @@ import {
 import React from 'react';
 
 type TagNamesProps = {
-  tags: TagData[];
+  timerId: string;
+  timerTags: TagData[];
   fetchedTags: TagData[];
 };
 
-export const TagNames: React.FC<TagNamesProps> = ({ tags, fetchedTags }) => {
+export const TagNames: React.FC<TagNamesProps> = ({ timerTags, fetchedTags, timerId }) => {
   const [searchText, setSearchText] = React.useState('');
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [touched, setTouched] = React.useState(false);
+  const [tags, setTags] = React.useState(timerTags);
 
   const [tagsToAssign, setTagsToAssign] = React.useState<TagData['id'][]>(
-    tags.map((tag) => tag.id)
+    timerTags.map((tag) => tag.id)
   );
   const open = Boolean(anchorEl);
   const tagNames = tags.map((tag) => `${tag.tagName}, `);
@@ -42,16 +46,33 @@ export const TagNames: React.FC<TagNamesProps> = ({ tags, fetchedTags }) => {
   );
 
   const handleCheckTag = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
-      setTagsToAssign([...tagsToAssign, e.target.value]);
+    setTouched(true);
+
+    const tagId = e.target.value;
+    const isChecked = e.target.checked;
+
+    let updatedTagsToAssign = [...tagsToAssign];
+
+    if (isChecked) {
+      updatedTagsToAssign.push(tagId);
     } else {
-      const filtered = tagsToAssign.filter((tag) => tag !== e.target.value);
-      setTagsToAssign(filtered);
+      updatedTagsToAssign = updatedTagsToAssign.filter((tag) => tag !== tagId);
     }
+
+    setTagsToAssign(updatedTagsToAssign);
+
+    const updatedTags = fetchedTags.filter((tag) => updatedTagsToAssign.includes(tag.id));
+
+    setTags(updatedTags);
   };
 
-  const handleCloseMenu = () => {
+  const handleCloseMenu = async () => {
     setAnchorEl(null);
+    if (touched) {
+      const result = await updateTagsForTimer(tagsToAssign, timerId);
+      console.log(result);
+    }
+    setTouched(false);
   };
 
   return (
@@ -71,10 +92,20 @@ export const TagNames: React.FC<TagNamesProps> = ({ tags, fetchedTags }) => {
       >
         {tags.length > 0 ? (
           <Tooltip title={<>{...tagNames}</>}>
-            <Chip
-              sx={{ backgroundColor: 'background.paper', borderRadius: 0 }}
-              label={<>{...tagNames}</>}
-            />
+            <Box>
+              <Chip
+                sx={{
+                  backgroundColor: 'background.paper',
+                  borderRadius: 0,
+                }}
+                label={
+                  <>
+                    {tagNames.slice(0, 3).join(' ')}
+                    {tagNames.length > 3 ? '...' : ''}
+                  </>
+                }
+              />
+            </Box>
           </Tooltip>
         ) : (
           <LocalOfferOutlinedIcon sx={{ fontSize: '30px' }} />
@@ -103,9 +134,10 @@ export const TagNames: React.FC<TagNamesProps> = ({ tags, fetchedTags }) => {
           {filteredTags.map((tag) => (
             <MenuItem key={tag.id}>
               <FormControlLabel
+                sx={{ width: '100%' }}
                 control={
                   <Checkbox
-                    defaultChecked={tags.some((t) => t.id === tag.id)}
+                    checked={tags.some((t) => t.id === tag.id)}
                     onChange={handleCheckTag}
                     value={tag.id}
                   />
