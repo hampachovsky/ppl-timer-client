@@ -1,8 +1,7 @@
-import { fetchProjects } from '@/services';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { RowActions } from '@/components/ui';
+import { deleteProject, fetchProjects, updateProject } from '@/services';
 import {
   Chip,
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -15,6 +14,16 @@ import React from 'react';
 
 export const ProjectTable: React.FC = async () => {
   const projects = await fetchProjects();
+
+  const handleArchiveProject = async (id: string, archived: boolean) => {
+    'use server';
+    await updateProject({ id, archived: !archived });
+  };
+  const handleDeleteProject = async (id: string) => {
+    'use server';
+    await deleteProject(id);
+  };
+
   if (projects?.error || projects?.success === null) return <h1>Error</h1>;
   return (
     <TableContainer sx={{ my: '1.5rem', boxShadow: 1 }} elevation={0} component={Paper}>
@@ -49,17 +58,12 @@ export const ProjectTable: React.FC = async () => {
               <TableCell align='center'>Сумарний час</TableCell>
               <TableCell align='center'>{row.hourlyRate}</TableCell>
               <TableCell align='right'>
-                <IconButton
-                  sx={{
-                    borderRadius: 0,
-                    borderLeft: '1px  dashed',
-                    borderColor: 'background.paper',
-                  }}
-                  edge='end'
-                  aria-label='more'
-                >
-                  <MoreVertIcon />
-                </IconButton>
+                <RowActions
+                  id={row.id}
+                  handleArchive={handleArchiveProject}
+                  handleDelete={handleDeleteProject}
+                  archived={row.archived}
+                />
               </TableCell>
             </TableRow>
           ))}

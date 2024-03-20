@@ -22,4 +22,25 @@ export const projectsAPI = {
 
     return response;
   },
+  async update(token: string, dto: Partial<ProjectData>): Promise<any> {
+    const response = await fetchClient.request(
+      `/projects/${dto.id}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ ...dto }),
+      },
+      token
+    );
+    return response;
+  },
+  async delete(token: string, id: string): Promise<any> {
+    const response = await fetchClient.request(
+      `/projects/${id}`,
+      {
+        method: 'DELETE',
+      },
+      token
+    );
+    return response;
+  },
 };

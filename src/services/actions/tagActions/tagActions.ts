@@ -3,7 +3,7 @@ import { cookiesName, routesPath } from '@/common';
 import { handleActionError, tagsAPI } from '@/services';
 import { PageSearchParams, TagData } from '@/types';
 import { getCookie } from 'cookies-next';
-import { revalidateTag } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 // TODO: ERROR MESAGE CONSTANT
@@ -29,6 +29,7 @@ export const updateTag = async (tag: TagData) => {
     if (token) {
       const tags = await tagsAPI.update(token, tag);
       revalidateTag(routesPath.TAGS);
+      revalidatePath(routesPath.TIME_TRACKER);
       if (!tags) return { error: 'Нема тегу' };
       if (tags) return { success: 'Тег успішно оновленно' };
     } else {
@@ -45,6 +46,7 @@ export const deleteTag = async (id: string) => {
     if (token) {
       const tags = await tagsAPI.delete(token, id);
       revalidateTag(routesPath.TAGS);
+      revalidatePath(routesPath.TIME_TRACKER);
       if (!tags) return { error: 'Нема тегу' };
       if (tags) return { success: 'Тег успішно видалено' };
     } else {

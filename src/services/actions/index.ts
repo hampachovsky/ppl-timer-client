@@ -10,4 +10,4 @@ export {
   updateTimer,
 } from './timerActions';
 
-export { createProject, fetchProjects } from './projectsActions';
+export { createProject, deleteProject, fetchProjects, updateProject } from './projectsActions';

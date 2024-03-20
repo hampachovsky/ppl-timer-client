@@ -2,7 +2,7 @@
 
 import { cookiesName, routesPath } from '@/common';
 import { handleActionError, projectsAPI } from '@/services';
-import { CreateProjectDto } from '@/types';
+import { CreateProjectDto, ProjectData } from '@/types';
 import { getCookie } from 'cookies-next';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -30,6 +30,38 @@ export const createProject = async (createProjectDto: CreateProjectDto) => {
       revalidatePath(routesPath.PROJECTS);
       if (!project) return { error: 'Нема проекту' };
       if (project) return { success: project };
+    } else {
+      throw new Error('Unauthorized');
+    }
+  } catch (err) {
+    return handleActionError(err, 'Проект');
+  }
+};
+
+export const updateProject = async (dto: Partial<ProjectData>) => {
+  const token = getCookie(cookiesName.TOKEN, { cookies });
+  try {
+    if (token) {
+      const project = await projectsAPI.update(token, dto);
+      revalidatePath(routesPath.PROJECTS);
+      if (!project) return { error: 'Нема проекту' };
+      if (project) return { success: 'Проект успішно оновленно' };
+    } else {
+      throw new Error('Unauthorized');
+    }
+  } catch (err) {
+    return handleActionError(err, 'Проект');
+  }
+};
+
+export const deleteProject = async (id: string) => {
+  const token = getCookie(cookiesName.TOKEN, { cookies });
+  try {
+    if (token) {
+      const response = await projectsAPI.delete(token, id);
+      revalidatePath(routesPath.PROJECTS);
+      if (!response) return { error: 'Помилка видалення' };
+      if (response) return { success: 'Проект успішно видалено' };
     } else {
       throw new Error('Unauthorized');
     }
