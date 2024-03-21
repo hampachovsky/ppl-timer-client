@@ -23,13 +23,13 @@ export const Tag: React.FC<TagProps> = ({ tagName, id, archived }) => {
     setIsEditMode(false);
   }, [isEditMode]);
 
-  const handleArchiveTag = async (tagId: string, tagArchived: boolean) => {
+  const handleArchiveTag = React.useCallback(async (tagId: string, tagArchived: boolean) => {
     await updateTag({ tagName, id: tagId, archived: !tagArchived });
-  };
+  }, []);
 
-  const handleDeleteTag = async (tagId: string) => {
+  const handleDeleteTag = React.useCallback(async (tagId: string) => {
     await deleteTag(tagId);
-  };
+  }, []);
 
   return (
     <Box key={id}>

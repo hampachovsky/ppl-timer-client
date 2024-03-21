@@ -44,6 +44,7 @@ export const updateProject = async (dto: Partial<ProjectData>) => {
     if (token) {
       const project = await projectsAPI.update(token, dto);
       revalidatePath(routesPath.PROJECTS);
+      revalidatePath(routesPath.TIME_TRACKER);
       if (!project) return { error: 'Нема проекту' };
       if (project) return { success: 'Проект успішно оновленно' };
     } else {
@@ -60,6 +61,7 @@ export const deleteProject = async (id: string) => {
     if (token) {
       const response = await projectsAPI.delete(token, id);
       revalidatePath(routesPath.PROJECTS);
+      revalidatePath(routesPath.TIME_TRACKER);
       if (!response) return { error: 'Помилка видалення' };
       if (response) return { success: 'Проект успішно видалено' };
     } else {

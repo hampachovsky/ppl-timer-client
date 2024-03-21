@@ -1,14 +1,12 @@
 'use client';
-import { TagNames, TrackerNameInput } from '@/features/timeTrackers';
+import { ProjectPickerLabel, TagNames, TrackerNameInput } from '@/features/timeTrackers';
 import { formatTime } from '@/lib';
 import { deleteTimer, startTimer } from '@/services';
-import { TagData, TimerIntervalData } from '@/types';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { ProjectData, TagData, TimerIntervalData } from '@/types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
 import {
   Box,
-  Button,
   Chip,
   Divider,
   Grid,
@@ -31,6 +29,7 @@ type TrackerListItemProps = {
   startedInterval?: TimerIntervalData;
   tags: TagData[];
   fetchedTags: TagData[];
+  fetchedProject: ProjectData[];
   handleOpenIntervalList?: () => void;
 };
 
@@ -46,6 +45,7 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
   tags,
   handleOpenIntervalList,
   fetchedTags,
+  fetchedProject,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -90,16 +90,7 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
             <TrackerNameInput timerName={timerName} timerId={trackerId} />
           </Grid>
           <Grid item xs={2} md={2}>
-            <Button
-              variant='text'
-              sx={{
-                borderRadius: 0,
-                height: '100%',
-              }}
-            >
-              <AddCircleIcon sx={{ pr: '3px', fontSize: '30px' }} />
-              Проект
-            </Button>
+            <ProjectPickerLabel fetchedProject={fetchedProject} />
           </Grid>
           <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={3} md={4}>
             <TagNames timerId={trackerId} timerTags={tags} fetchedTags={fetchedTags} />

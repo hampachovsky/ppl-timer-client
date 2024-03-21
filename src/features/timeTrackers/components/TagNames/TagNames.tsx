@@ -1,20 +1,19 @@
 'use client';
+import { MenuSearchInput } from '@/components/ui';
+import { useShowAssignMenu } from '@/features/timeTrackers';
+import { useSearchMenuItems } from '@/hooks';
 import { updateTagsForTimer } from '@/services';
 import { TagData } from '@/types';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
-import SearchIcon from '@mui/icons-material/Search';
 import {
   Box,
   Checkbox,
   Chip,
-  Divider,
   FormControlLabel,
   FormGroup,
   IconButton,
-  InputAdornment,
   Menu,
   MenuItem,
-  OutlinedInput,
   Tooltip,
 } from '@mui/material';
 import React from 'react';
@@ -26,20 +25,16 @@ type TagNamesProps = {
 };
 
 export const TagNames: React.FC<TagNamesProps> = ({ timerTags, fetchedTags, timerId }) => {
-  const [searchText, setSearchText] = React.useState('');
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [touched, setTouched] = React.useState(false);
+  const { handleSearchMenuItem, searchText } = useSearchMenuItems();
   const [tags, setTags] = React.useState(timerTags);
+  const { handleCloseMenu, handleOpenMenu, open, setTouched, touched, anchorEl } =
+    useShowAssignMenu();
 
   const [tagsToAssign, setTagsToAssign] = React.useState<TagData['id'][]>(
     timerTags.map((tag) => tag.id)
   );
-  const open = Boolean(anchorEl);
-  const tagNames = tags.map((tag) => `${tag.tagName}, `);
 
-  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const tagNames = tags.map((tag) => `${tag.tagName}, `);
 
   const filteredTags = fetchedTags.filter((tag) =>
     tag.tagName.toLowerCase().includes(searchText.toLowerCase())
@@ -66,13 +61,12 @@ export const TagNames: React.FC<TagNamesProps> = ({ timerTags, fetchedTags, time
     setTags(updatedTags);
   };
 
-  const handleCloseMenu = async () => {
-    setAnchorEl(null);
+  const handleCloseSubmit = async () => {
     if (touched) {
       const result = await updateTagsForTimer(tagsToAssign, timerId);
       console.log(result);
     }
-    setTouched(false);
+    handleCloseMenu();
   };
 
   return (
@@ -112,25 +106,9 @@ export const TagNames: React.FC<TagNamesProps> = ({ timerTags, fetchedTags, time
         )}
       </IconButton>
       <FormGroup>
-        <Menu id='tags-menu' anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
-          <Box sx={{ padding: '0.3rem' }}>
-            <OutlinedInput
-              sx={{
-                mb: 2,
-              }}
-              type='search'
-              placeholder='Пошук за назвою'
-              fullWidth
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              startAdornment={
-                <InputAdornment position='start'>
-                  <SearchIcon />
-                </InputAdornment>
-              }
-            />
-            <Divider />
-          </Box>
+        <Menu id='tags-menu' anchorEl={anchorEl} open={open} onClose={handleCloseSubmit}>
+          <MenuSearchInput handleSearch={handleSearchMenuItem} searchText={searchText} />
+
           {filteredTags.map((tag) => (
             <MenuItem key={tag.id}>
               <FormControlLabel
