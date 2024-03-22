@@ -102,6 +102,24 @@ export const updateTagsForTimer = async (dto: TagData['id'][], id: string) => {
   }
 };
 
+export const assignProjectToTimer = async (projectId: string | null, id: string) => {
+  const token = getCookie(cookiesName.TOKEN, { cookies });
+  try {
+    if (token) {
+      const projId = projectId !== null ? +projectId : null;
+      const timer = await timerAPI.assignProjectToTimer(token, projId, id);
+      revalidatePath(routesPath.TIME_TRACKER);
+      revalidateTag(routesPath.PROJECTS);
+      if (!timer) return { error: 'Нема таймеру' };
+      if (timer) return { success: 'Таймер успішно оновленно' };
+    } else {
+      throw new Error('Unauthorized');
+    }
+  } catch (err) {
+    return handleActionError(err, 'Таймер');
+  }
+};
+
 export const deleteTimer = async (id: string, isInterval = false) => {
   const token = getCookie(cookiesName.TOKEN, { cookies });
   try {

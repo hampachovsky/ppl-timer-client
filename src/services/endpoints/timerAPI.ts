@@ -96,4 +96,16 @@ export const timerAPI = {
     );
     return response;
   },
+
+  async assignProjectToTimer(token: string, projectId: number | null, id: string): Promise<any> {
+    const response = await fetchClient.request(
+      `/timers/assignProjectToTimer/${id}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ projectId }),
+      },
+      token
+    );
+    return response;
+  },
 };

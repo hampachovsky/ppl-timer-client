@@ -1,4 +1,5 @@
 export {
+  assignProjectToTimer,
   createTimer,
   deleteTimer,
   fetchTimers,

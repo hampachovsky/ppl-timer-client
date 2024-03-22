@@ -2,7 +2,7 @@
 import { ProjectPickerLabel, TagNames, TrackerNameInput } from '@/features/timeTrackers';
 import { formatTime } from '@/lib';
 import { deleteTimer, startTimer } from '@/services';
-import { ProjectData, TagData, TimerIntervalData } from '@/types';
+import { ProjectData, TagData, TimerData, TimerIntervalData } from '@/types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
 import {
@@ -30,6 +30,7 @@ type TrackerListItemProps = {
   tags: TagData[];
   fetchedTags: TagData[];
   fetchedProject: ProjectData[];
+  assignedProject: TimerData['assignedProject'];
   handleOpenIntervalList?: () => void;
 };
 
@@ -44,6 +45,7 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
   isInterval = false,
   tags,
   handleOpenIntervalList,
+  assignedProject,
   fetchedTags,
   fetchedProject,
 }) => {
@@ -90,7 +92,11 @@ export const TrackerListItem: React.FC<TrackerListItemProps> = ({
             <TrackerNameInput timerName={timerName} timerId={trackerId} />
           </Grid>
           <Grid item xs={2} md={2}>
-            <ProjectPickerLabel fetchedProject={fetchedProject} />
+            <ProjectPickerLabel
+              timerId={trackerId}
+              assignedProject={assignedProject}
+              fetchedProject={fetchedProject}
+            />
           </Grid>
           <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={3} md={4}>
             <TagNames timerId={trackerId} timerTags={tags} fetchedTags={fetchedTags} />

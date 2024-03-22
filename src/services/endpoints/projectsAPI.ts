@@ -5,7 +5,7 @@ export const projectsAPI = {
   async getAll(token: string): Promise<ProjectData[]> {
     const response = await fetchClient.request(
       `/projects/byUser`,
-      { next: { revalidate: 3600, tags: ['projects'] } },
+      { next: { revalidate: 3600, tags: ['/projects'] } },
       token
     );
     return response;
