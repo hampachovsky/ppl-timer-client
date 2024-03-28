@@ -1,8 +1,6 @@
 'use client';
 import { createTimer } from '@/services';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
-import { Alert, Box, Button, Grid, IconButton, Snackbar, TextField } from '@mui/material';
+import { Alert, Box, Button, Grid, Snackbar, TextField } from '@mui/material';
 import React, { ChangeEvent } from 'react';
 
 export const ManualTrackerControl: React.FC = () => {
@@ -32,13 +30,13 @@ export const ManualTrackerControl: React.FC = () => {
   return (
     <Box
       sx={{
-        backgroundColor: 'background.paper',
+        backgroundColor: 'customBG.list',
         padding: '0.7em',
         boxShadow: 1,
       }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={7}>
+        <Grid item xs={9}>
           <TextField
             onChange={handleTextChange}
             fullWidth
@@ -46,34 +44,8 @@ export const ManualTrackerControl: React.FC = () => {
             placeholder='Над чим працюєте?'
           />
         </Grid>
-        <Grid item>
-          <Button
-            variant='text'
-            sx={{
-              borderRadius: 0,
-              height: '100%',
-            }}
-          >
-            <AddCircleIcon sx={{ mr: 1 }} />
-            Проект
-          </Button>
-        </Grid>
-        <Grid item>
-          <IconButton
-            sx={{
-              borderRadius: 0,
-              height: '100%',
-              borderRight: '1px solid',
-              borderLeft: '1px solid',
-              borderColor: 'customBG.list',
-            }}
-          >
-            <LocalOfferOutlinedIcon />
-          </IconButton>
-        </Grid>
-
         <Grid xs={2} item>
-          <TextField fullWidth defaultValue={'00:00:00'} />
+          <TextField fullWidth value={'00:00:00'} />
         </Grid>
         <Grid justifyContent='end' item xs={1}>
           <Button onClick={handleTimerCreate} sx={{ height: '100%' }} variant='contained'>

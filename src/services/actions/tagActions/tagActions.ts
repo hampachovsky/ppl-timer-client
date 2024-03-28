@@ -6,15 +6,14 @@ import { getCookie } from 'cookies-next';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
-// TODO: ERROR MESAGE CONSTANT
 export const createTag = async (tagName: string) => {
   const token = getCookie(cookiesName.TOKEN, { cookies });
   try {
     if (token) {
       const tags = await tagsAPI.create(tagName, token);
       revalidateTag(routesPath.TAGS);
-      if (!tags) return { error: 'Нема тегів' };
       if (tags) return { success: tags };
+      if (!tags) return { error: 'Нема тегів' };
     } else {
       throw new Error('Unauthorized');
     }

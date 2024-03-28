@@ -11,8 +11,10 @@ export const fetchTimers = async () => {
   try {
     if (token) {
       const timers = await timerAPI.getAll(token);
-      if (!timers) return { error: 'Нема таймерів', success: null };
-      if (timers) return { success: timers, error: null };
+      if (timers.length) {
+        return { success: timers, error: null };
+      }
+      return { error: 'Нема таймерів', success: null };
     } else {
       throw new Error('Unauthorized');
     }
@@ -59,6 +61,7 @@ export const stopTimer = async (id: string, dto: StopTimerDto) => {
     if (token) {
       const timer = await timerAPI.stopTimer(token, id, dto);
       revalidatePath(routesPath.TIME_TRACKER);
+      revalidateTag(routesPath.TAGS);
       if (!timer) return { error: 'Нема таймеру' };
       if (timer) return { success: 'Таймер успішно зупинено' };
     } else {

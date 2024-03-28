@@ -21,7 +21,12 @@ const TimeTrackerPage = async () => {
   return (
     <Box>
       {startedTimer ? (
-        <TimeTrackerControl startedInterval={startedInterval} startedTimer={startedTimer} />
+        <TimeTrackerControl
+          fetchedProject={fetchedProjects.success}
+          fetchedTags={fetchedTags.success}
+          startedInterval={startedInterval}
+          startedTimer={startedTimer}
+        />
       ) : (
         <ManualTrackerControl />
       )}

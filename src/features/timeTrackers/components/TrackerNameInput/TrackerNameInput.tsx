@@ -7,9 +7,14 @@ import React, { ChangeEvent, useEffect } from 'react';
 type TrackerNameInputProps = {
   timerName?: string;
   timerId: string;
+  variant?: 'filled' | 'outlined' | 'standard';
 };
 
-export const TrackerNameInput: React.FC<TrackerNameInputProps> = ({ timerName = '', timerId }) => {
+export const TrackerNameInput: React.FC<TrackerNameInputProps> = ({
+  timerName = '',
+  timerId,
+  variant = 'standard',
+}) => {
   const [text, setText] = React.useState(timerName);
   const [isTouched, setIsTouched] = React.useState(false);
   const debouncedValue = useDebounce<string>(text, 700);
@@ -29,15 +34,29 @@ export const TrackerNameInput: React.FC<TrackerNameInputProps> = ({ timerName = 
     setIsTouched(true);
   };
   return (
-    <TextField
-      sx={{
-        width: '90%',
-        ml: '0.5em',
-      }}
-      variant='standard'
-      value={text}
-      onChange={handleTextChange}
-      InputProps={{ disableUnderline: true }}
-    />
+    <>
+      {variant === 'standard' ? (
+        <TextField
+          sx={{
+            width: '90%',
+            ml: '0.5em',
+          }}
+          variant={'standard'}
+          value={text}
+          onChange={handleTextChange}
+          InputProps={{ disableUnderline: true }}
+        />
+      ) : (
+        <TextField
+          sx={{
+            width: '90%',
+            ml: '0.5em',
+          }}
+          variant={variant}
+          value={text}
+          onChange={handleTextChange}
+        />
+      )}
+    </>
   );
 };

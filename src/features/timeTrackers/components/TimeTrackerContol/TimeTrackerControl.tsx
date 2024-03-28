@@ -1,9 +1,8 @@
 'use client';
+import { ProjectPickerLabel, TagNames, TrackerNameInput } from '@/features/timeTrackers';
 import { stopTimer } from '@/services';
-import { TimerData, TimerIntervalData } from '@/types';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
-import { Box, Button, Grid, IconButton, TextField } from '@mui/material';
+import { ProjectData, TagData, TimerData, TimerIntervalData } from '@/types';
+import { Box, Button, Grid, TextField } from '@mui/material';
 import { differenceInSeconds } from 'date-fns';
 import React from 'react';
 import { useStopwatch } from 'react-timer-hook';
@@ -11,11 +10,15 @@ import { useStopwatch } from 'react-timer-hook';
 type TimeTrackerControlProps = {
   startedTimer: TimerData;
   startedInterval: TimerIntervalData;
+  fetchedProject: ProjectData[];
+  fetchedTags: TagData[];
 };
 
 export const TimeTrackerControl: React.FC<TimeTrackerControlProps> = ({
   startedTimer,
   startedInterval,
+  fetchedProject,
+  fetchedTags,
 }) => {
   const stopwatchOffset = new Date();
   const secOffset = differenceInSeconds(startedInterval?.intervalStart, stopwatchOffset);
@@ -34,39 +37,31 @@ export const TimeTrackerControl: React.FC<TimeTrackerControlProps> = ({
       intervalEnd: new Date(),
       intervalDuration: totalSeconds,
     });
-    console.log(r);
   };
 
   return (
-    <Box sx={{ backgroundColor: 'background.paper', padding: '0.7em', boxShadow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={7}>
-          <TextField fullWidth value={startedTimer.timerName} />
+    <Box sx={{ backgroundColor: 'customBG.list', padding: '0.7em', boxShadow: 1 }}>
+      <Grid container spacing={1}>
+        <Grid item xs={4}>
+          <TrackerNameInput
+            timerName={startedTimer.timerName}
+            timerId={startedTimer.id}
+            variant={'outlined'}
+          />
         </Grid>
-        <Grid item>
-          <Button
-            variant='text'
-            sx={{
-              borderRadius: 0,
-              height: '100%',
-            }}
-          >
-            <AddCircleIcon sx={{ mr: 1 }} />
-            Проект
-          </Button>
+        <Grid item xs={2}>
+          <ProjectPickerLabel
+            assignedProject={startedTimer.assignedProject}
+            timerId={startedTimer.id}
+            fetchedProject={fetchedProject}
+          />
         </Grid>
-        <Grid item>
-          <IconButton
-            sx={{
-              borderRadius: 0,
-              height: '100%',
-              borderRight: '1px solid',
-              borderLeft: '1px solid',
-              borderColor: 'customBG.list',
-            }}
-          >
-            <LocalOfferOutlinedIcon />
-          </IconButton>
+        <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={3}>
+          <TagNames
+            timerId={startedTimer.id}
+            timerTags={startedTimer.tags}
+            fetchedTags={fetchedTags}
+          />
         </Grid>
 
         <Grid xs={2} item>

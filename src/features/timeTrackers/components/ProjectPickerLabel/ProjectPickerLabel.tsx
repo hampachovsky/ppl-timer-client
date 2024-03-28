@@ -73,10 +73,10 @@ export const ProjectPickerLabel: React.FC<ProjectPickerLabelProps> = ({
       <Menu id='project-menu' anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
         <MenuSearchInput handleSearch={handleSearchMenuItem} searchText={searchText} />
         {assignedProject !== null && (
-          <>
+          <div>
             <MenuItem onClick={() => handleAssignProject(null)}>Без проекту</MenuItem>
             <Divider />
-          </>
+          </div>
         )}
         {filteredProjects.map((project) => (
           <MenuItem key={project.id} onClick={() => handleAssignProject(project.id)}>
