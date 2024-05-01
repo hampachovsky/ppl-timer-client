@@ -1,5 +1,6 @@
-import { TagsControl } from '@/features/tags';
+import { ListControl } from '@/features/list';
 import { TagsList } from '@/features/tags/components/TagsList/TagsList';
+import { createTag } from '@/services';
 import { PageSearchParams } from '@/types';
 import { Typography } from '@mui/material';
 
@@ -9,7 +10,7 @@ const TagsPage = ({ params, searchParams }: PageSearchParams) => {
       <Typography sx={{ mb: 3 }} variant='h5'>
         Теги
       </Typography>
-      <TagsControl />
+      <ListControl createItem={createTag} />
       <TagsList params={params} searchParams={searchParams} />
     </div>
   );

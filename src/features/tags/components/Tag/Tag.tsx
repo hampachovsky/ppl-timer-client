@@ -3,7 +3,7 @@ import { RowActions } from '@/components/ui';
 import { EditTag } from '@/features/tags';
 import { deleteTag, updateTag } from '@/services';
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, IconButton, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { Box, IconButton, ListItem, ListItemText } from '@mui/material';
 import React, { useCallback } from 'react';
 
 type TagProps = {
@@ -58,9 +58,10 @@ export const Tag: React.FC<TagProps> = ({ tagName, id, archived }) => {
           </Box>
         }
       >
-        <ListItemButton sx={{ borderBottom: '1px  solid', borderColor: 'background.paper' }}>
-          <ListItemText primary={tagName} />
-        </ListItemButton>
+        <ListItemText
+          sx={{ borderBottom: '1px  solid', borderColor: 'background.paper', padding: '10px' }}
+          primary={tagName}
+        />
       </ListItem>
       {isEditMode && (
         <EditTag

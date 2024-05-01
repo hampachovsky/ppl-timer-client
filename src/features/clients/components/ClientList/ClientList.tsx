@@ -1,15 +1,15 @@
-import { Tag } from '@/features/tags';
 import { fetchTags } from '@/services';
 import { PageSearchParams } from '@/types';
 import { Box, List, ListSubheader, Paper } from '@mui/material';
 import React from 'react';
+import { ClientItem } from '../ClientItem';
 
-type TagsListProps = {
+type ClientListProps = {
   params: PageSearchParams['params'];
   searchParams: PageSearchParams['searchParams'];
 };
 
-export const TagsList: React.FC<TagsListProps> = async ({ params, searchParams }) => {
+export const ClientList: React.FC<ClientListProps> = async ({ params, searchParams }) => {
   const data = await fetchTags(searchParams);
 
   if (data?.error) return <h1>{data.error}</h1>;
@@ -20,15 +20,18 @@ export const TagsList: React.FC<TagsListProps> = async ({ params, searchParams }
           sx={{ width: '100%', bgcolor: 'background.paper' }}
           component='nav'
           subheader={
-            <ListSubheader component='div' id='nested-tag_list-subheader'>
+            <ListSubheader component='div' id='nested-client_list-subheader'>
               Назва
             </ListSubheader>
           }
         >
           <Box sx={{ backgroundColor: 'customBG.list' }}>
-            {data.success.map((tag) => (
-              <Tag key={tag.id} id={tag.id} tagName={tag.tagName} archived={tag.archived} />
-            ))}
+            <ClientItem />
+            <ClientItem />
+            <ClientItem />
+            <ClientItem />
+            <ClientItem />
+            <ClientItem />
           </Box>
         </List>
       </Paper>

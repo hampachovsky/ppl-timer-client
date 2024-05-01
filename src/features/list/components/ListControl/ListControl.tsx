@@ -1,13 +1,16 @@
 'use client';
 import { TypeFilter } from '@/components/ui';
 import { useDebounce } from '@/hooks';
-import { createTag } from '@/services';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Button, Grid, InputAdornment, OutlinedInput, TextField } from '@mui/material';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { ChangeEvent, useEffect } from 'react';
 
-export const TagsControl: React.FC = () => {
+type ListControlProps = {
+  createItem: (name: string) => void;
+};
+
+export const ListControl: React.FC<ListControlProps> = ({ createItem }) => {
   const [filter, setFilter] = React.useState('active');
   const [tagName, setTagName] = React.useState('');
   const [isTouched, setIsTouched] = React.useState(false);
@@ -41,8 +44,8 @@ export const TagsControl: React.FC = () => {
     setQueryString(event.target.value);
   };
 
-  const onAddTag = async () => {
-    await createTag(tagName);
+  const onAddItem = () => {
+    createItem(tagName);
     setTagName('');
   };
   return (
@@ -71,7 +74,7 @@ export const TagsControl: React.FC = () => {
             value={tagName}
             label='Додати тег'
           />
-          <Button onClick={() => onAddTag()} sx={{ ml: 3 }} variant='contained'>
+          <Button onClick={() => onAddItem()} sx={{ ml: 3 }} variant='contained'>
             Додати
           </Button>
         </Grid>

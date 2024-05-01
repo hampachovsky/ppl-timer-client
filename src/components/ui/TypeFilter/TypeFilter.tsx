@@ -13,7 +13,6 @@ export const TypeFilter: React.FC<TypeFilterProps> = ({
   handleChangeType,
   disableBorder = false,
 }) => {
-  /*   const [filterType, setFilterType] = React.useState(filter); */
   const handleChange = (event: SelectChangeEvent) => {
     handleChangeType(event.target.value);
   };
