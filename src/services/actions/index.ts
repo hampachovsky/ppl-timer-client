@@ -1,4 +1,6 @@
 export { getUserAction, loginAction, registerAction } from './authActions';
+export { createClient, fetchClients } from './clientActions';
+export { createProject, deleteProject, fetchProjects, updateProject } from './projectsActions';
 export { createTag, deleteTag, fetchTags, updateTag } from './tagActions';
 export {
   assignProjectToTimer,
@@ -10,5 +12,3 @@ export {
   updateTagsForTimer,
   updateTimer,
 } from './timerActions';
-
-export { createProject, deleteProject, fetchProjects, updateProject } from './projectsActions';

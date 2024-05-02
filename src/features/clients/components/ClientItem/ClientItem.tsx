@@ -5,7 +5,21 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import { Box, IconButton, ListItem, ListItemText, Tooltip } from '@mui/material';
 import React from 'react';
 
-export const ClientItem: React.FC = () => {
+type ClientItemProps = {
+  clientName: string;
+  clientEmail: string;
+  clientNote: string;
+  id: string;
+  archived: boolean;
+};
+
+export const ClientItem: React.FC<ClientItemProps> = ({
+  clientName,
+  clientEmail,
+  clientNote,
+  id,
+  archived,
+}) => {
   const [isEditMode, setIsEditMode] = React.useState(false);
 
   const handleEdit = () => {
@@ -26,26 +40,29 @@ export const ClientItem: React.FC = () => {
   const handleDeleteClient = React.useCallback(async (clientId: string) => {
     console.log('delete test');
   }, []);
+
   return (
-    <Box>
+    <Box key={id}>
       <ListItem
         sx={{ borderBottom: '1px  solid', borderColor: 'background.paper' }}
         secondaryAction={
           <Box>
-            <Tooltip title=' Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero, necessitatibus?'>
-              <IconButton
-                sx={{
-                  borderRadius: 0,
-                  mx: 1,
-                  borderColor: 'background.paper',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                  },
-                }}
-              >
-                <EventNoteIcon />
-              </IconButton>
-            </Tooltip>
+            {clientNote.length > 0 && (
+              <Tooltip title={clientNote}>
+                <IconButton
+                  sx={{
+                    borderRadius: 0,
+                    mx: 1,
+                    borderColor: 'background.paper',
+                    '&:hover': {
+                      backgroundColor: 'transparent',
+                    },
+                  }}
+                >
+                  <EventNoteIcon />
+                </IconButton>
+              </Tooltip>
+            )}
             <IconButton
               sx={{
                 borderRadius: 0,
@@ -68,11 +85,7 @@ export const ClientItem: React.FC = () => {
           </Box>
         }
       >
-        <ListItemText
-          sx={{ padding: '6px' }}
-          primary={'clientName'}
-          secondary={'client@gmail.com'}
-        />
+        <ListItemText sx={{ padding: '6px' }} primary={clientName} secondary={clientEmail} />
       </ListItem>
     </Box>
   );

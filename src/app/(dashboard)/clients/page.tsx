@@ -1,4 +1,5 @@
 import { ClientList } from '@/features/clients';
+import { ListControl } from '@/features/list';
 import { PageSearchParams } from '@/types';
 import { Typography } from '@mui/material';
 
@@ -8,7 +9,7 @@ const ClientsPage = ({ params, searchParams }: PageSearchParams) => {
       <Typography sx={{ mb: 3 }} variant='h5'>
         Клієнти
       </Typography>
-      {/*       <ListControl /> */}
+      <ListControl isClientControl />
       <ClientList params={params} searchParams={searchParams} />
     </div>
   );

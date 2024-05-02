@@ -10,7 +10,7 @@ const TagsPage = ({ params, searchParams }: PageSearchParams) => {
       <Typography sx={{ mb: 3 }} variant='h5'>
         Теги
       </Typography>
-      <ListControl createItem={createTag} />
+      <ListControl createItem={createTag} isClientControl={false} />
       <TagsList params={params} searchParams={searchParams} />
     </div>
   );

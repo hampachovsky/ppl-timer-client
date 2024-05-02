@@ -34,7 +34,7 @@ export const TypeFilter: React.FC<TypeFilterProps> = ({
               '.MuiOutlinedInput-notchedOutline': { border: 0 },
               width: '33%',
             }
-          : {}
+          : { width: '20%' }
       }
     >
       <MenuItem value={'active'}>Активні</MenuItem>

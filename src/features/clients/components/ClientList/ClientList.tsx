@@ -1,4 +1,4 @@
-import { fetchTags } from '@/services';
+import { fetchClients } from '@/services/actions';
 import { PageSearchParams } from '@/types';
 import { Box, List, ListSubheader, Paper } from '@mui/material';
 import React from 'react';
@@ -10,7 +10,7 @@ type ClientListProps = {
 };
 
 export const ClientList: React.FC<ClientListProps> = async ({ params, searchParams }) => {
-  const data = await fetchTags(searchParams);
+  const data = await fetchClients(searchParams);
 
   if (data?.error) return <h1>{data.error}</h1>;
   if (data?.success) {
@@ -26,12 +26,16 @@ export const ClientList: React.FC<ClientListProps> = async ({ params, searchPara
           }
         >
           <Box sx={{ backgroundColor: 'customBG.list' }}>
-            <ClientItem />
-            <ClientItem />
-            <ClientItem />
-            <ClientItem />
-            <ClientItem />
-            <ClientItem />
+            {data.success.map((client) => (
+              <ClientItem
+                key={client.id}
+                id={client.id}
+                clientName={client.clientName}
+                clientNote={client.clientNote}
+                clientEmail={client.clientEmail}
+                archived={client.archived}
+              />
+            ))}
           </Box>
         </List>
       </Paper>

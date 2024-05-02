@@ -85,3 +85,8 @@ export type CreateProjectDto = {
   color: string;
   clientId: string | null;
 };
+
+export type CreateClientDto = {
+  clientName: string;
+  clientEmail: string;
+};
