@@ -1,1 +1,1 @@
-export { createClient, fetchClients } from './clientActions';
+export { createClient, deleteClient, fetchClients, updateClient } from './clientActions';

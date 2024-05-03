@@ -74,7 +74,12 @@ export const EditTag: React.FC<EditTagProps> = ({
           <Button variant='text' onClick={handleClose}>
             Відмінити
           </Button>
-          <Button onClick={handleUpdateTag} variant='contained' type='submit'>
+          <Button
+            onClick={handleUpdateTag}
+            variant='contained'
+            type='submit'
+            disabled={!tagName.length}
+          >
             Зберегти
           </Button>
         </DialogActions>

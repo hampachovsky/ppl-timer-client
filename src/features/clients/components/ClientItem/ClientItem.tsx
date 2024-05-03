@@ -1,9 +1,11 @@
 'use client';
 import { RowActions } from '@/components/ui';
+import { deleteClient, updateClient } from '@/services/actions';
 import EditIcon from '@mui/icons-material/Edit';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import { Box, IconButton, ListItem, ListItemText, Tooltip } from '@mui/material';
 import React from 'react';
+import { EditClient } from '../EditClient';
 
 type ClientItemProps = {
   clientName: string;
@@ -32,13 +34,19 @@ export const ClientItem: React.FC<ClientItemProps> = ({
 
   const handleArchiveClient = React.useCallback(
     async (clientId: string, clientArchived: boolean) => {
-      console.log('archive test');
+      await updateClient({
+        id: clientId,
+        archived: !clientArchived,
+        clientName,
+        clientNote,
+        clientEmail,
+      });
     },
     []
   );
 
   const handleDeleteClient = React.useCallback(async (clientId: string) => {
-    console.log('delete test');
+    await deleteClient(clientId);
   }, []);
 
   return (
@@ -77,16 +85,23 @@ export const ClientItem: React.FC<ClientItemProps> = ({
               <EditIcon />
             </IconButton>
             <RowActions
-              id={'0'}
+              id={id}
               handleArchive={handleArchiveClient}
               handleDelete={handleDeleteClient}
-              archived={false}
+              archived={archived}
             />
           </Box>
         }
       >
         <ListItemText sx={{ padding: '6px' }} primary={clientName} secondary={clientEmail} />
       </ListItem>
+      {isEditMode && (
+        <EditClient
+          handleCloseEdit={handleCloseEdit}
+          isEditMode={isEditMode}
+          client={{ clientName, clientEmail, clientNote, id, archived }}
+        />
+      )}
     </Box>
   );
 };

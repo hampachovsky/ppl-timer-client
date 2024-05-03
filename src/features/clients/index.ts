@@ -1,1 +1,1 @@
-export { ClientItem, ClientList } from './components';
+export { ClientItem, ClientList, EditClient } from './components';

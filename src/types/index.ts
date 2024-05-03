@@ -90,3 +90,5 @@ export type CreateClientDto = {
   clientName: string;
   clientEmail: string;
 };
+
+export type UpdateClientDto = Partial<ClientData>;

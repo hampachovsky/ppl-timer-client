@@ -1,2 +1,2 @@
 export { placeholderSchema, registerActionSchema } from './authActionSchemas';
-export { createClientSchema } from './clientActionSchema';
+export { createClientSchema, updateClientSchema } from './clientActionSchema';
