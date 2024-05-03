@@ -15,7 +15,10 @@ export const projectsAPI = {
       '/projects',
       {
         method: 'POST',
-        body: JSON.stringify(createProjectDto),
+        body: JSON.stringify({
+          ...createProjectDto,
+          clientId: createProjectDto.clientId !== null ? parseInt(createProjectDto.clientId) : null,
+        }),
       },
       token
     );

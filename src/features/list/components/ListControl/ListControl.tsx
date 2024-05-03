@@ -80,11 +80,6 @@ export const ListControl: React.FC<ListControlProps> = ({ createItem, isClientCo
       createItem(itemName);
     } else {
       execute({ clientEmail, clientName: itemName });
-      /*      if (status === 'hasErrored') {
-        console.log(result.);
-        setErrorMessage(result.data);
-        setOpenSnackbar(true);
-      } */
     }
     setItemName('');
     setClientEmail('');

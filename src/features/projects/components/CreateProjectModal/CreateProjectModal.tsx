@@ -1,6 +1,8 @@
 'use client';
+import { MenuSearchInput } from '@/components/ui';
+import { useSearchMenuItems } from '@/hooks';
 import { createProject } from '@/services';
-import SearchIcon from '@mui/icons-material/Search';
+import { ClientData } from '@/types';
 import {
   Box,
   Button,
@@ -9,10 +11,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Divider,
-  InputAdornment,
   MenuItem,
-  OutlinedInput,
   Select,
   SelectChangeEvent,
   TextField,
@@ -21,11 +20,17 @@ import {
 import React, { ChangeEvent } from 'react';
 import { HexColorPicker } from 'react-colorful';
 
-export const CreateProjectModal: React.FC = () => {
+type CreateProjectModalProps = {
+  clients: ClientData[];
+};
+
+export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ clients }) => {
   const [open, setOpen] = React.useState(false);
   const [projectName, setProjectName] = React.useState('');
   const [clientId, setClientId] = React.useState<null | string>(null);
   const [color, setColor] = React.useState('#000000');
+
+  const { handleSearchMenuItem, searchText } = useSearchMenuItems();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -36,6 +41,10 @@ export const CreateProjectModal: React.FC = () => {
   ) => {
     setProjectName(event.target.value);
   };
+
+  const filteredClients = clients.filter((client) =>
+    client.clientName.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const handleChangeColor = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setColor(event.target.value);
@@ -101,23 +110,13 @@ export const CreateProjectModal: React.FC = () => {
                   fullWidth
                   onChange={handleChangeClient}
                 >
-                  <OutlinedInput
-                    sx={{
-                      mb: 2,
-                    }}
-                    type='search'
-                    placeholder='Пошук за назвою'
-                    fullWidth
-                    startAdornment={
-                      <InputAdornment position='start'>
-                        <SearchIcon />
-                      </InputAdornment>
-                    }
-                  />
-                  <Divider />
-
+                  <MenuSearchInput handleSearch={handleSearchMenuItem} searchText={searchText} />
                   <MenuItem value={'none'}>Без клієнту</MenuItem>
-                  <MenuItem value={'clientA'}>Some client</MenuItem>
+                  {filteredClients.map((client) => (
+                    <MenuItem key={client.id} value={client.id}>
+                      {client.clientName}
+                    </MenuItem>
+                  ))}
                 </Select>
               </Box>
             </Box>
