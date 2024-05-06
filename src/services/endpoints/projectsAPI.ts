@@ -2,10 +2,16 @@ import { fetchClient } from '@/services';
 import { CreateProjectDto, ProjectData } from '@/types';
 
 export const projectsAPI = {
-  async getAll(token: string): Promise<ProjectData[]> {
+  async getAll(
+    qs: string = '',
+    type: string = 'active',
+    client: string = '',
+    billable: string = 'all',
+    token: string
+  ): Promise<ProjectData[]> {
     const response = await fetchClient.request(
-      `/projects/byUser`,
-      { next: { revalidate: 3600, tags: ['/projects'] } },
+      `/projects/byUser?type=${type}&qs=${qs}&client=${client}&billable=${billable}`,
+      { next: { revalidate: 0, tags: ['/projects'] } },
       token
     );
     return response;

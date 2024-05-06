@@ -49,6 +49,11 @@ export type ProjectData = {
   hourlyRate: number;
   createdAt: Date;
   client: ClientData;
+  timers: [
+    {
+      timerSummary: TimerData['timerSummary'];
+    }
+  ];
 };
 
 export type ClientData = {

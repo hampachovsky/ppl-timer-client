@@ -15,8 +15,8 @@ const ProjectPage = async ({ params, searchParams }: PageSearchParams) => {
         </Typography>
         <CreateProjectModal clients={clients?.success} />
       </Box>
-      <ProjectFilter />
-      <ProjectTable />
+      <ProjectFilter clients={clients?.success} />
+      <ProjectTable params={params} searchParams={searchParams} />
     </div>
   );
 };

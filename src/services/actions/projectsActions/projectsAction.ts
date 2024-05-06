@@ -2,16 +2,24 @@
 
 import { cookiesName, routesPath } from '@/common';
 import { handleActionError, projectsAPI } from '@/services';
-import { CreateProjectDto, ProjectData } from '@/types';
+import { CreateProjectDto, PageSearchParams, ProjectData } from '@/types';
 import { getCookie } from 'cookies-next';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
-export const fetchProjects = async () => {
+export const fetchProjects = async (
+  searchParams: PageSearchParams['searchParams'] = { qs: '', type: '', client: '', billable: '' }
+) => {
   const token = getCookie(cookiesName.TOKEN, { cookies });
   try {
     if (token) {
-      const projects = await projectsAPI.getAll(token);
+      const projects = await projectsAPI.getAll(
+        searchParams.qs as string,
+        searchParams.type as string,
+        searchParams.client as string,
+        searchParams.billable as string,
+        token
+      );
       if (!projects) return { error: 'Нема проектів', success: null };
       if (projects) return { success: projects, error: null };
     } else {

@@ -1,5 +1,7 @@
 import { RowActions } from '@/components/ui';
+import { formatTime } from '@/lib';
 import { deleteProject, fetchProjects, updateProject } from '@/services';
+import { PageSearchParams, ProjectData } from '@/types';
 import {
   Chip,
   Paper,
@@ -12,8 +14,14 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-export const ProjectTable: React.FC = async () => {
-  const projects = await fetchProjects();
+type ProjectTableProps = {
+  params: PageSearchParams['params'];
+  searchParams: PageSearchParams['searchParams'];
+};
+
+export const ProjectTable: React.FC<ProjectTableProps> = async ({ params, searchParams }) => {
+  const projects = await fetchProjects(searchParams);
+  let totalTimeInHours = 0;
 
   const handleArchiveProject = async (id: string, archived: boolean) => {
     'use server';
@@ -24,7 +32,24 @@ export const ProjectTable: React.FC = async () => {
     await deleteProject(id);
   };
 
-  if (projects?.error || projects?.success === null) return <h1>Error</h1>;
+  function calculateTime(arr: ProjectData['timers'], field: keyof ProjectData['timers'][0]) {
+    let total = 0;
+
+    arr.forEach((obj) => {
+      const fieldValue = obj[field].toString();
+      total += parseInt(fieldValue);
+    });
+
+    const formattedTime = formatTime(total);
+
+    const [hours, minutes, seconds] = formattedTime.split(':').map(Number);
+    const timeInHours = hours + minutes / 60 + seconds / 3600;
+    totalTimeInHours = timeInHours;
+
+    return formattedTime;
+  }
+
+  if (projects?.error || projects?.success === null) return <h1>Проекти не знайдено</h1>;
   return (
     <TableContainer sx={{ my: '1.5rem', boxShadow: 1 }} elevation={0} component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='projects table'>
@@ -55,8 +80,11 @@ export const ProjectTable: React.FC = async () => {
               <TableCell align='center'>
                 {row.client !== null ? row.client.clientName : '—'}
               </TableCell>
-              <TableCell align='center'>Сумарний час</TableCell>
-              <TableCell align='center'>{row.hourlyRate}</TableCell>
+              <TableCell align='center'>{calculateTime(row.timers, 'timerSummary')}</TableCell>
+              <TableCell align='center'>
+                {`${(totalTimeInHours * row.hourlyRate).toFixed(2)}`}
+                ($)
+              </TableCell>
               <TableCell align='right'>
                 <RowActions
                   id={row.id}
