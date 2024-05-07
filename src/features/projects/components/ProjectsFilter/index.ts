@@ -1,1 +1,1 @@
-export { ProjectFilter } from './ProjectFilter';
+export { ProjectsFilter } from './ProjectsFilter';

@@ -1,1 +1,1 @@
-export { CreateProjectModal, ProjectFilter, ProjectTable } from './components';
+export { CreateProjectModal, ProjectsFilter } from './components';

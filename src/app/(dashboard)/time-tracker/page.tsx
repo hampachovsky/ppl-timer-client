@@ -6,7 +6,10 @@ import { Box } from '@mui/material';
 const TimeTrackerPage = async () => {
   const timers = await fetchTimers();
   const fetchedTags = await fetchTags({ type: 'active' });
-  const fetchedProjects = await fetchProjects();
+  const fetchedProjects = await fetchProjects({
+    qs: '',
+    type: 'active',
+  });
   // TODO: Change error handling here
   if (!timers || !fetchedTags || !fetchedProjects) return <h1>fetching error</h1>;
   if (!timers.success) return <h1>{timers.error}</h1>;

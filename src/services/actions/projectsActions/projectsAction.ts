@@ -2,9 +2,9 @@
 
 import { cookiesName, routesPath } from '@/common';
 import { handleActionError, projectsAPI } from '@/services';
-import { CreateProjectDto, PageSearchParams, ProjectData } from '@/types';
+import { CreateProjectDto, PageSearchParams, UpdateProjectDto } from '@/types';
 import { getCookie } from 'cookies-next';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export const fetchProjects = async (
@@ -30,12 +30,28 @@ export const fetchProjects = async (
   }
 };
 
+export const fetchProject = async (id: string) => {
+  const token = getCookie(cookiesName.TOKEN, { cookies });
+  try {
+    if (token) {
+      const project = await projectsAPI.getById(id, token);
+      if (!project) return { error: 'Нема проекту', success: null };
+      if (project) return { success: project, error: null };
+    } else {
+      throw new Error('Unauthorized');
+    }
+  } catch (err) {
+    return handleActionError(err, 'Проект');
+  }
+};
+
 export const createProject = async (createProjectDto: CreateProjectDto) => {
   const token = getCookie(cookiesName.TOKEN, { cookies });
   try {
     if (token) {
       const project = await projectsAPI.create(token, createProjectDto);
       revalidatePath(routesPath.PROJECTS);
+      revalidateTag('/project');
       if (!project) return { error: 'Нема проекту' };
       if (project) return { success: project };
     } else {
@@ -46,12 +62,13 @@ export const createProject = async (createProjectDto: CreateProjectDto) => {
   }
 };
 
-export const updateProject = async (dto: Partial<ProjectData>) => {
+export const updateProject = async (dto: UpdateProjectDto) => {
   const token = getCookie(cookiesName.TOKEN, { cookies });
   try {
     if (token) {
       const project = await projectsAPI.update(token, dto);
       revalidatePath(routesPath.PROJECTS);
+      revalidateTag('/project');
       revalidatePath(routesPath.TIME_TRACKER);
       if (!project) return { error: 'Нема проекту' };
       if (project) return { success: 'Проект успішно оновленно' };
@@ -69,6 +86,7 @@ export const deleteProject = async (id: string) => {
     if (token) {
       const response = await projectsAPI.delete(token, id);
       revalidatePath(routesPath.PROJECTS);
+      revalidateTag('/project');
       revalidatePath(routesPath.TIME_TRACKER);
       if (!response) return { error: 'Помилка видалення' };
       if (response) return { success: 'Проект успішно видалено' };

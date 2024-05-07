@@ -21,7 +21,7 @@ export type TagData = {
 };
 
 export type PageSearchParams = {
-  params: { slug: string };
+  params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
@@ -54,6 +54,29 @@ export type ProjectData = {
       timerSummary: TimerData['timerSummary'];
     }
   ];
+};
+
+export type UpdateProjectDto = Partial<ProjectData> & {
+  clientId?: number;
+};
+
+export type ExtendedProjectData = Omit<ProjectData, 'timers'> & {
+  timers: Omit<TimerData, 'assignedProject' | 'tags' | 'timerIntervals'>[];
+  tasks: TaskData[];
+};
+
+export enum TaskType {
+  LOW = 'low',
+  NORMAL = 'normal',
+  MODERATE = 'moderate',
+  HIGH = 'high',
+}
+
+export type TaskData = {
+  id: string;
+  completed: boolean;
+  taskType: TaskType;
+  task: string;
 };
 
 export type ClientData = {

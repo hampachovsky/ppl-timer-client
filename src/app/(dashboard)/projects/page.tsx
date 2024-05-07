@@ -1,4 +1,5 @@
-import { CreateProjectModal, ProjectFilter, ProjectTable } from '@/features/projects';
+import { CreateProjectModal, ProjectsFilter } from '@/features/projects';
+import { ProjectsTable } from '@/features/projects/components/ProjectsTable/ProjectsTable';
 import { fetchClients } from '@/services/actions';
 import { PageSearchParams } from '@/types';
 import { Box, Typography } from '@mui/material';
@@ -15,8 +16,8 @@ const ProjectPage = async ({ params, searchParams }: PageSearchParams) => {
         </Typography>
         <CreateProjectModal clients={clients?.success} />
       </Box>
-      <ProjectFilter clients={clients?.success} />
-      <ProjectTable params={params} searchParams={searchParams} />
+      <ProjectsFilter clients={clients?.success} />
+      <ProjectsTable params={params} searchParams={searchParams} />
     </div>
   );
 };

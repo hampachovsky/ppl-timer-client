@@ -1,3 +1,4 @@
+import { routesPath } from '@/common';
 import { RowActions } from '@/components/ui';
 import { formatTime } from '@/lib';
 import { deleteProject, fetchProjects, updateProject } from '@/services';
@@ -12,6 +13,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import Link from 'next/link';
 import React from 'react';
 
 type ProjectTableProps = {
@@ -19,7 +21,7 @@ type ProjectTableProps = {
   searchParams: PageSearchParams['searchParams'];
 };
 
-export const ProjectTable: React.FC<ProjectTableProps> = async ({ params, searchParams }) => {
+export const ProjectsTable: React.FC<ProjectTableProps> = async ({ params, searchParams }) => {
   const projects = await fetchProjects(searchParams);
   let totalTimeInHours = 0;
 
@@ -72,17 +74,22 @@ export const ProjectTable: React.FC<ProjectTableProps> = async ({ params, search
               }}
             >
               <TableCell>
-                <Chip
-                  sx={{ backgroundColor: row.color, height: '10px', width: '10px', mr: '0.6em' }}
-                />
-                {row.projectName}
+                <Link
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                  href={`${routesPath.PROJECTS}/${row.id}`}
+                >
+                  <Chip
+                    sx={{ backgroundColor: row.color, height: '10px', width: '10px', mr: '0.6em' }}
+                  />
+                  {row.projectName}
+                </Link>
               </TableCell>
               <TableCell align='center'>
                 {row.client !== null ? row.client.clientName : '—'}
               </TableCell>
               <TableCell align='center'>{calculateTime(row.timers, 'timerSummary')}</TableCell>
               <TableCell align='center'>
-                {`${(totalTimeInHours * row.hourlyRate).toFixed(2)}`}
+                {row.billable ? `${(totalTimeInHours * row.hourlyRate).toFixed(2)}` : '0.00'}
                 ($)
               </TableCell>
               <TableCell align='right'>

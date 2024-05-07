@@ -1,17 +1,25 @@
 import { fetchClient } from '@/services';
-import { CreateProjectDto, ProjectData } from '@/types';
+import { CreateProjectDto, ExtendedProjectData, ProjectData, UpdateProjectDto } from '@/types';
 
 export const projectsAPI = {
   async getAll(
     qs: string = '',
     type: string = 'active',
-    client: string = '',
+    client: string = 'all',
     billable: string = 'all',
     token: string
   ): Promise<ProjectData[]> {
     const response = await fetchClient.request(
       `/projects/byUser?type=${type}&qs=${qs}&client=${client}&billable=${billable}`,
-      { next: { revalidate: 0, tags: ['/projects'] } },
+      { next: { revalidate: 3600, tags: ['/projects'] } },
+      token
+    );
+    return response;
+  },
+  async getById(id: string, token: string): Promise<ExtendedProjectData> {
+    const response = await fetchClient.request(
+      `/projects/${id}`,
+      { next: { revalidate: 0, tags: ['/project'] } },
       token
     );
     return response;
@@ -31,7 +39,7 @@ export const projectsAPI = {
 
     return response;
   },
-  async update(token: string, dto: Partial<ProjectData>): Promise<any> {
+  async update(token: string, dto: UpdateProjectDto): Promise<any> {
     const response = await fetchClient.request(
       `/projects/${dto.id}`,
       {

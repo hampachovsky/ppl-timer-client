@@ -1,1 +1,1 @@
-export { ProjectTable } from './ProjectTable';
+export { ProjectsTable } from './ProjectsTable';

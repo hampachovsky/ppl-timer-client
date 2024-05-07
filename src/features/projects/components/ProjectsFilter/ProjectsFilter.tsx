@@ -21,9 +21,9 @@ type ProjectFilterProps = {
   clients: ClientData[];
 };
 
-export const ProjectFilter: React.FC<ProjectFilterProps> = ({ clients }) => {
+export const ProjectsFilter: React.FC<ProjectFilterProps> = ({ clients }) => {
   const [filter, setFilter] = React.useState('active');
-  const [selectedClient, setSelectedClient] = React.useState<string>('');
+  const [selectedClient, setSelectedClient] = React.useState<string>('all');
   const [billableFilter, setBillableFilter] = React.useState<string>('all');
   const [queryString, setQueryString] = React.useState<string>('');
   const { handleSearchMenuItem, searchText } = useSearchMenuItems();

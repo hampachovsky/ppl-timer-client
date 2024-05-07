@@ -15,6 +15,8 @@ export const createClient = action(createClientSchema, async (createClientDto: C
     if (token) {
       const clients = await clientAPI.create(createClientDto, token);
       revalidateTag(routesPath.CLIENTS);
+      revalidateTag('/project');
+      revalidatePath(routesPath.PROJECTS);
       if (clients) return { success: clients };
       if (!clients) return { error: 'Нема Клієнту' };
     } else {
@@ -52,6 +54,7 @@ export const updateClient = action(updateClientSchema, async (client: UpdateClie
     if (token) {
       const clients = await clientAPI.update(token, client);
       revalidateTag(routesPath.CLIENTS);
+      revalidateTag('/project');
       revalidatePath(routesPath.PROJECTS);
       if (!clients) return { error: 'Нема клієнта' };
       if (clients) return { success: 'Клієнта успішно оновлено' };
@@ -69,6 +72,7 @@ export const deleteClient = async (id: string) => {
     if (token) {
       const clients = await clientAPI.delete(token, id);
       revalidateTag(routesPath.CLIENTS);
+      revalidateTag('/project');
       revalidatePath(routesPath.PROJECTS);
       if (!clients) return { error: 'Нема клієнта' };
       if (clients) return { success: 'Клієнта успішно видалено' };
