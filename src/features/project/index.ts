@@ -1,1 +1,8 @@
-export { Project, ProjectNote, ProjectSettings } from './components';
+export {
+  EditTask,
+  Project,
+  ProjectNote,
+  ProjectSettings,
+  ProjectTasks,
+  TaskItem,
+} from './components';

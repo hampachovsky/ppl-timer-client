@@ -20,5 +20,13 @@ export {
   updateTagsForTimer,
   updateTimer,
 } from './actions';
-export { authAPI, clientAPI, fetchClient, projectsAPI, tagsAPI, timerAPI } from './endpoints';
+export {
+  authAPI,
+  clientAPI,
+  fetchClient,
+  projectsAPI,
+  tagsAPI,
+  taskAPI,
+  timerAPI,
+} from './endpoints';
 export { handleActionError } from './interceptors';

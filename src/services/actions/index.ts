@@ -8,6 +8,7 @@ export {
   updateProject,
 } from './projectsActions';
 export { createTag, deleteTag, fetchTags, updateTag } from './tagActions';
+export { createTask, deleteTask, fetchTasks, updateTask } from './taskActions';
 export {
   assignProjectToTimer,
   createTimer,

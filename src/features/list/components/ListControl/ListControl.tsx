@@ -19,11 +19,16 @@ import React, { ChangeEvent, useEffect } from 'react';
 
 type ListControlProps = {
   isClientControl: boolean;
+  isTaskControl?: boolean;
   createItem?: (name: string) => void;
 };
 
-export const ListControl: React.FC<ListControlProps> = ({ createItem, isClientControl }) => {
-  const [filter, setFilter] = React.useState('active');
+export const ListControl: React.FC<ListControlProps> = ({
+  createItem,
+  isClientControl,
+  isTaskControl = false,
+}) => {
+  const [filter, setFilter] = React.useState(isTaskControl ? 'all' : 'active');
   const [itemName, setItemName] = React.useState('');
   const [clientEmail, setClientEmail] = React.useState('');
   const [isTouched, setIsTouched] = React.useState(false);
@@ -88,7 +93,11 @@ export const ListControl: React.FC<ListControlProps> = ({ createItem, isClientCo
     <Box>
       <Grid container spacing={1}>
         <Grid item xs={7} sm={7}>
-          <TypeFilter filter={filter} handleChangeType={handleChangeType} />
+          <TypeFilter
+            filter={filter}
+            handleChangeType={handleChangeType}
+            isTaskFilter={isTaskControl}
+          />
           <OutlinedInput
             sx={{
               ml: 2,
@@ -110,7 +119,7 @@ export const ListControl: React.FC<ListControlProps> = ({ createItem, isClientCo
             onChange={(e) => setItemName(e.target.value)}
             required
             value={itemName}
-            label={isClientControl ? "Ім'я клієнту" : 'Додати тег'}
+            label={isClientControl ? "Ім'я клієнту" : 'Додати елемент'}
           />
           {isClientControl && (
             <TextField

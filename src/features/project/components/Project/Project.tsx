@@ -1,6 +1,6 @@
 'use client';
-import { ProjectNote, ProjectSettings } from '@/features/project';
-import { ClientData, ExtendedProjectData } from '@/types';
+import { ProjectNote, ProjectSettings, ProjectTasks } from '@/features/project';
+import { ClientData, ExtendedProjectData, TaskData } from '@/types';
 import { TabContext, TabPanel } from '@mui/lab';
 import { Box, Tab, Tabs } from '@mui/material';
 import React from 'react';
@@ -8,9 +8,10 @@ import React from 'react';
 type ProjectPropsType = {
   project: ExtendedProjectData;
   clients: ClientData[];
+  fetchedTasks: TaskData[] | null;
 };
-export const Project: React.FC<ProjectPropsType> = ({ project, clients }) => {
-  const [value, setValue] = React.useState('settings');
+export const Project: React.FC<ProjectPropsType> = ({ project, clients, fetchedTasks }) => {
+  const [value, setValue] = React.useState('tasks');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -31,7 +32,7 @@ export const Project: React.FC<ProjectPropsType> = ({ project, clients }) => {
           </Tabs>
         </Box>
         <TabPanel sx={{ backgroundColor: 'customBG.list' }} value='tasks'>
-          Задачі
+          <ProjectTasks tasks={fetchedTasks} projectId={project.id} />
         </TabPanel>
         <TabPanel sx={{ backgroundColor: 'customBG.list' }} value='note'>
           <ProjectNote id={project.id} note={project.note} />

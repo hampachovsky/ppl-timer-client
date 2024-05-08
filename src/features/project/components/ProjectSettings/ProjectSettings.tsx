@@ -210,7 +210,6 @@ export const ProjectSettings: React.FC<ProjectSettingsProps> = ({
           Оплата в годину (USD){' '}
         </Typography>
         <TextField
-          autoFocus
           required
           margin='dense'
           id='hourlyRate'

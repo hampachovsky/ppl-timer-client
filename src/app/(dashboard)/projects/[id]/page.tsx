@@ -1,6 +1,12 @@
 import { RowActions } from '@/components/ui';
 import { Project } from '@/features/project/';
-import { deleteProject, fetchClients, fetchProject, updateProject } from '@/services/actions';
+import {
+  deleteProject,
+  fetchClients,
+  fetchProject,
+  fetchTasks,
+  updateProject,
+} from '@/services/actions';
 import { PageSearchParams } from '@/types';
 import { Box, Typography } from '@mui/material';
 
@@ -16,8 +22,12 @@ const OneProjPage = async ({ params, searchParams }: PageSearchParams) => {
     'use server';
     await deleteProject(id);
   };
-  if (fetchedProject?.error || fetchedProject?.success === null || fetchedProject === undefined)
+  if (fetchedProject?.error || fetchedProject?.success === null || fetchedProject === undefined) {
     return <h1>Проект не знайдено</h1>;
+  }
+  const fetchedTasks = await fetchTasks(searchParams, fetchedProject.success.id);
+
+  if (fetchedTasks?.success === undefined) return <h1>Помилка при завантаженні задач проекту</h1>;
   if (clients?.error || clients?.success === null || clients?.success === undefined)
     return <h1>Помилка</h1>;
   return (
@@ -49,7 +59,11 @@ const OneProjPage = async ({ params, searchParams }: PageSearchParams) => {
           </Box>
         </Box>
       </Box>
-      <Project project={fetchedProject.success} clients={clients.success} />
+      <Project
+        project={fetchedProject.success}
+        clients={clients.success}
+        fetchedTasks={fetchedTasks.success}
+      />
     </div>
   );
 };
