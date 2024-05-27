@@ -40,7 +40,7 @@ export const ProjectsFilter: React.FC<ProjectFilterProps> = ({ clients }) => {
     [filter]
   );
 
-  const filteredClients = clients.filter((client) =>
+  const filteredClients = clients?.filter((client) =>
     client.clientName.toLowerCase().includes(searchText.toLowerCase())
   );
 
@@ -87,7 +87,7 @@ export const ProjectsFilter: React.FC<ProjectFilterProps> = ({ clients }) => {
             <MenuItem value={'all'}>Всі клієнти</MenuItem>
             <MenuItem value={'none'}>Без клієнту</MenuItem>
             <Divider />
-            {filteredClients.map((client) => (
+            {filteredClients?.map((client) => (
               <MenuItem key={client.id} value={client.id}>
                 {client.clientName}
               </MenuItem>

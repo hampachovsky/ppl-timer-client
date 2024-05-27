@@ -50,7 +50,7 @@ export const ProjectSettings: React.FC<ProjectSettingsProps> = ({
 
   const { handleSearchMenuItem, searchText } = useSearchMenuItems();
 
-  const filteredClients = clients.filter((client) =>
+  const filteredClients = clients?.filter((client) =>
     client.clientName.toLowerCase().includes(searchText.toLowerCase())
   );
 
@@ -159,7 +159,7 @@ export const ProjectSettings: React.FC<ProjectSettingsProps> = ({
         >
           <MenuSearchInput handleSearch={handleSearchMenuItem} searchText={searchText} />
           <MenuItem value={'none'}>Без клієнту</MenuItem>
-          {filteredClients.map((client) => (
+          {filteredClients?.map((client) => (
             <MenuItem key={client.id} value={client.id}>
               {client.clientName}
             </MenuItem>

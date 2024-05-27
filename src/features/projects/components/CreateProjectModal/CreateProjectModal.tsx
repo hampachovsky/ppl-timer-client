@@ -46,7 +46,7 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ clients 
     setProjectName(event.target.value);
   };
 
-  const filteredClients = clients.filter((client) =>
+  const filteredClients = clients?.filter((client) =>
     client.clientName.toLowerCase().includes(searchText.toLowerCase())
   );
 
@@ -118,7 +118,7 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ clients 
                 >
                   <MenuSearchInput handleSearch={handleSearchMenuItem} searchText={searchText} />
                   <MenuItem value={'none'}>Без клієнту</MenuItem>
-                  {filteredClients.map((client) => (
+                  {filteredClients?.map((client) => (
                     <MenuItem key={client.id} value={client.id}>
                       {client.clientName}
                     </MenuItem>

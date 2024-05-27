@@ -5,7 +5,7 @@ import { loginAction } from '@/services';
 import { userStore } from '@/store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
-import { Box } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import { useAction } from 'next-safe-action/hooks';
 import { redirect, useRouter } from 'next/navigation';
 import React from 'react';
@@ -14,6 +14,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 export const LoginForm: React.FC = () => {
   const { setUser } = userStore();
   const router = useRouter();
+  const [error, setError] = React.useState('');
 
   const methods = useForm<LoginDto>({
     defaultValues: {
@@ -34,14 +35,14 @@ export const LoginForm: React.FC = () => {
   // TODO: ADD error handler
   const { execute, status } = useAction(loginAction, {
     onSuccess(data) {
-      if (data?.error) throw new Error(data.error);
+      if (data?.error) setError(data.error);
       if (data?.success) {
         setUser(data?.success);
         redirect(routesPath.TIME_TRACKER);
       }
     },
     onExecute(data) {
-      console.log('start...');
+      setError('');
     },
   });
   const onSubmit: SubmitHandler<LoginDto> = async (data) => {
@@ -52,6 +53,7 @@ export const LoginForm: React.FC = () => {
     <Box maxWidth='sm'>
       <FormProvider {...methods}>
         <form action='submit' onSubmit={handleSubmit(onSubmit)}>
+          {error && <Alert severity='error'>{error}</Alert>}
           <FormField
             error={errors.email?.message}
             fieldKey='email'

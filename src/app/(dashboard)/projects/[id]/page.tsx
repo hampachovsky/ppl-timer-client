@@ -28,8 +28,8 @@ const OneProjPage = async ({ params, searchParams }: PageSearchParams) => {
   const fetchedTasks = await fetchTasks(searchParams, fetchedProject.success.id);
 
   if (fetchedTasks?.success === undefined) return <h1>Помилка при завантаженні задач проекту</h1>;
-  if (clients?.error || clients?.success === null || clients?.success === undefined)
-    return <h1>Помилка</h1>;
+  // if (clients?.error || clients?.success === null || clients?.success === undefined)
+  //   return <h1>Помилка</h1>;
   return (
     <div style={{ padding: '2.85rem .7rem' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }} component={'div'}>
@@ -61,7 +61,7 @@ const OneProjPage = async ({ params, searchParams }: PageSearchParams) => {
       </Box>
       <Project
         project={fetchedProject.success}
-        clients={clients.success}
+        clients={clients?.success!}
         fetchedTasks={fetchedTasks.success}
       />
     </div>

@@ -11,7 +11,7 @@ type ProjectPropsType = {
   fetchedTasks: TaskData[] | null;
 };
 export const Project: React.FC<ProjectPropsType> = ({ project, clients, fetchedTasks }) => {
-  const [value, setValue] = React.useState('tasks');
+  const [value, setValue] = React.useState('settings');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);

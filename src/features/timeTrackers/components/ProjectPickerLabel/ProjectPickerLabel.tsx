@@ -23,7 +23,7 @@ export const ProjectPickerLabel: React.FC<ProjectPickerLabelProps> = ({
 
   const { handleCloseMenu, handleOpenMenu, open, anchorEl } = useShowAssignMenu();
 
-  const filteredProjects = fetchedProject.filter((project) =>
+  const filteredProjects = fetchedProject?.filter((project) =>
     project.projectName.toLowerCase().includes(searchText.toLowerCase())
   );
 
@@ -78,7 +78,7 @@ export const ProjectPickerLabel: React.FC<ProjectPickerLabelProps> = ({
             <Divider />
           </div>
         )}
-        {filteredProjects.map((project) => (
+        {filteredProjects?.map((project) => (
           <MenuItem key={project.id} onClick={() => handleAssignProject(project.id)}>
             <>
               <Chip

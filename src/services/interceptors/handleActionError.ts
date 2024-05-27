@@ -14,7 +14,10 @@ export const handleActionError = (e: any, notFoundText: string) => {
   }
 
   if (error.status === 409) {
-    return { error: `Дана назва вже використовується, будь-ласка оберіть іншу`, success: null };
+    return {
+      error: `Данe ім'я або пошта вже використовується, будь-ласка оберіть іншу`,
+      success: null,
+    };
   }
 
   return { error: 'Щось пішло не так', success: null };

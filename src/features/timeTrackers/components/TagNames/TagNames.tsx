@@ -36,7 +36,7 @@ export const TagNames: React.FC<TagNamesProps> = ({ timerTags, fetchedTags, time
 
   const tagNames = tags.map((tag) => `${tag.tagName}, `);
 
-  const filteredTags = fetchedTags.filter((tag) =>
+  const filteredTags = fetchedTags?.filter((tag) =>
     tag.tagName.toLowerCase().includes(searchText.toLowerCase())
   );
 
@@ -56,7 +56,7 @@ export const TagNames: React.FC<TagNamesProps> = ({ timerTags, fetchedTags, time
 
     setTagsToAssign(updatedTagsToAssign);
 
-    const updatedTags = fetchedTags.filter((tag) => updatedTagsToAssign.includes(tag.id));
+    const updatedTags = fetchedTags?.filter((tag) => updatedTagsToAssign.includes(tag.id));
 
     setTags(updatedTags);
   };
@@ -109,7 +109,7 @@ export const TagNames: React.FC<TagNamesProps> = ({ timerTags, fetchedTags, time
         <Menu id='tags-menu' anchorEl={anchorEl} open={open} onClose={handleCloseSubmit}>
           <MenuSearchInput handleSearch={handleSearchMenuItem} searchText={searchText} />
 
-          {filteredTags.map((tag) => (
+          {filteredTags?.map((tag) => (
             <MenuItem key={tag.id}>
               <FormControlLabel
                 sx={{ width: '100%' }}
