@@ -69,6 +69,7 @@ export const updateProject = async (dto: UpdateProjectDto) => {
       const project = await projectsAPI.update(token, dto);
       revalidatePath(routesPath.PROJECTS);
       revalidateTag('/project');
+      revalidateTag(routesPath.CLIENTS);
       revalidatePath(routesPath.TIME_TRACKER);
       if (!project) return { error: 'Нема проекту' };
       if (project) return { success: 'Проект успішно оновленно' };

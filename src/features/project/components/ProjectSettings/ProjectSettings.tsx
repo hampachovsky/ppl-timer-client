@@ -80,7 +80,7 @@ export const ProjectSettings: React.FC<ProjectSettingsProps> = ({
 
   const handleUpdateProjectName = async () => {
     if (name.length > 0 && name !== projectName) {
-      const res = await updateProject({ projectName: name, id });
+      const res = await updateProject({ projectName: name, id, clientId: +clientId });
       if (res?.success) {
         setResponseMessage(res.success);
         setOpenSnackbar(true);
@@ -100,7 +100,7 @@ export const ProjectSettings: React.FC<ProjectSettingsProps> = ({
   };
   const handleUpdateProjectColor = async () => {
     if (color !== projectColor) {
-      const res = await updateProject({ color, id });
+      const res = await updateProject({ color, id, clientId: +clientId });
       if (res?.success) {
         setResponseMessage(res.success);
         setOpenSnackbar(true);
@@ -109,7 +109,7 @@ export const ProjectSettings: React.FC<ProjectSettingsProps> = ({
   };
   const handleUpdateProjectBillable = async () => {
     if (billable !== projectBillable) {
-      const res = await updateProject({ billable, id });
+      const res = await updateProject({ billable, id, clientId: +clientId });
       if (res?.success) {
         setResponseMessage(res.success);
         setOpenSnackbar(true);
@@ -118,7 +118,7 @@ export const ProjectSettings: React.FC<ProjectSettingsProps> = ({
   };
   const handleUpdateHourlyRate = async () => {
     if (hourlyRate !== projectHourlyRate) {
-      const res = await updateProject({ hourlyRate, id });
+      const res = await updateProject({ hourlyRate, id, clientId: +clientId });
       if (res?.success) {
         setResponseMessage(res.success);
         setOpenSnackbar(true);

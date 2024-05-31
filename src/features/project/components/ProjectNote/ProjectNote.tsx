@@ -6,9 +6,10 @@ import React, { ChangeEvent } from 'react';
 type ProjectNoteProps = {
   id: string;
   note: string;
+  clientId: string;
 };
 
-export const ProjectNote: React.FC<ProjectNoteProps> = ({ id, note }) => {
+export const ProjectNote: React.FC<ProjectNoteProps> = ({ id, note, clientId }) => {
   const [projectNote, setProjectNote] = React.useState(note);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [responseMessage, setResponseMessage] = React.useState('');
@@ -19,7 +20,7 @@ export const ProjectNote: React.FC<ProjectNoteProps> = ({ id, note }) => {
 
   const handleUpdateProjectNote = async () => {
     if (note !== projectNote) {
-      const res = await updateProject({ note: projectNote, id });
+      const res = await updateProject({ note: projectNote, id, clientId: +clientId });
       if (res?.success) {
         setResponseMessage(res.success);
         setOpenSnackbar(true);
