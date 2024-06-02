@@ -19,8 +19,11 @@ export const ProjectNote: React.FC<ProjectNoteProps> = ({ id, note, clientId }) 
   };
 
   const handleUpdateProjectNote = async () => {
+    let res;
     if (note !== projectNote) {
-      const res = await updateProject({ note: projectNote, id, clientId: +clientId });
+      clientId !== null
+        ? (res = await updateProject({ note: projectNote, id, clientId: +clientId }))
+        : (res = await updateProject({ note: projectNote, id }));
       if (res?.success) {
         setResponseMessage(res.success);
         setOpenSnackbar(true);
