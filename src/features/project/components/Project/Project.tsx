@@ -16,6 +16,7 @@ export const Project: React.FC<ProjectPropsType> = ({ project, clients, fetchedT
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+  console.log(project);
   return (
     <TabContext value={value}>
       <Box sx={{ width: '100%' }}>
@@ -35,7 +36,7 @@ export const Project: React.FC<ProjectPropsType> = ({ project, clients, fetchedT
           <ProjectTasks tasks={fetchedTasks} projectId={project.id} />
         </TabPanel>
         <TabPanel sx={{ backgroundColor: 'customBG.list' }} value='note'>
-          <ProjectNote id={project.id} note={project.note} clientId={project.client.id} />
+          <ProjectNote id={project.id} note={project.note} clientId={project.client?.id} />
         </TabPanel>
         <TabPanel sx={{ backgroundColor: 'customBG.list' }} value='settings'>
           <ProjectSettings

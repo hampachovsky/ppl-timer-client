@@ -6,7 +6,7 @@ import React, { ChangeEvent } from 'react';
 type ProjectNoteProps = {
   id: string;
   note: string;
-  clientId: string;
+  clientId: string | null;
 };
 
 export const ProjectNote: React.FC<ProjectNoteProps> = ({ id, note, clientId }) => {

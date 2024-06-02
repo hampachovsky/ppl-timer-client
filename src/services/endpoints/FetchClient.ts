@@ -16,8 +16,6 @@ class RequestClient {
       headers.append('Authorization', `Bearer ${token}`);
     }
 
-    console.log(this.baseURL);
-
     const response = await fetch(this.baseURL + url, { ...options, headers });
     if (!response.ok) {
       throw { status: response.status, statusText: response.statusText };
